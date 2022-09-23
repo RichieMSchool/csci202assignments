@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 /* Header related styling */
 .title {
     text-align: center;
@@ -17,7 +21,7 @@ img {
 
 
 /* Text related styling*/
-.text, .credit, .details {
+.text, .credit, .details{
     font-size: 1.3em;
     margin: 0 5%;
     line-height: 1.3em;
@@ -38,6 +42,10 @@ img {
 
 /* details */
 
+li {
+    margin: 1em 0;
+}
+
 .details {
     margin-top: 2em;
 }
@@ -46,11 +54,13 @@ img {
     margin-left: 3em;
 }
 
-#detail-contents a{
+#detail-contents a:not(.outlink){
     color: #000000ff;
+    text-decoration: none;
+    transition: color .3s;
 }
 
-#detail-contents a:hover {
+#detail-contents a:not(.outlink):hover {
     color: #0000ff;
     text-decoration: underline;
 }
@@ -75,4 +85,10 @@ a {
 
 .point-marker a:visited{
     color: inherit;
+}
+
+a.outlink, a.outlink:hover {
+    color: #0000ffff;
+    text-decoration: underline;
+    text-align: center;
 }

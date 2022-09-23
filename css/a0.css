@@ -46,6 +46,33 @@ img {
     margin-left: 3em;
 }
 
+#detail-contents a{
+    color: #000000ff;
+}
+
+#detail-contents a:hover {
+    color: #0000ff;
+    text-decoration: underline;
+}
+
+span {
+    transition: background-color 2s;
+    background-color: transparent;
+}
+span:target {
+    background-color: #ffff00;
+}
+
 a {
     text-decoration: none;
+}
+
+.point-marker {
+    text-decoration: none;
+    color: #ff0000ff;
+    display: inline;
+}
+
+.point-marker a:visited{
+    color: inherit;
 }

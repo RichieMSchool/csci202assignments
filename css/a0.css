@@ -1,0 +1,51 @@
+/* Header related styling */
+.title {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2.25em;
+}
+
+img {
+    align-content: center;
+}
+
+
+/* Text related styling*/
+.text, .credit, .details {
+    font-size: 1.3em;
+    margin: 0 5%;
+    line-height: 1.3em;
+}
+
+.text br {
+    display: block;
+    margin-top: 1em;
+    content: ""; /* there is probably a better way to do this, but this made it work*/
+}
+
+.credit {
+    color: #0000ff;
+    margin-top: 2.5em;
+    font-weight: bold;
+    line-height: normal;
+}
+
+/* details */
+
+.details {
+    margin-top: 2em;
+}
+
+#detail-contents {
+    margin-left: 3em;
+}
+
+a {
+    text-decoration: none;
+}

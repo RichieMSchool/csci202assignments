@@ -1,0 +1,21 @@
+header {
+    text-align: center;
+    font-size: 2em;
+    line-height: 1em;
+}
+
+
+#links{
+    text-align: center;
+    padding-top: 1em;
+    line-height: 1em;
+}
+
+#links a {
+    font-size: 2em;
+}
+
+
+#links h3 {
+    font-size: 3em;
+}

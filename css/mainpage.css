@@ -11,6 +11,11 @@ header {
     line-height: 1em;
 }
 
+#links ul{
+    list-style-type: none;
+    line-height: 2.5em;
+}
+
 #links a {
     font-size: 2em;
 }

@@ -1,7 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Rowdies:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&family=Rowdies:wght@300&display=swap');
 
 * {
   font-family: Oswald, Arial, Helvetica, sans-serif;
+}
+
+button {
+  color: #222222;
+  background-color: #ffffff;
+  border: 2px solid #222222;
+  transition: all .3s;
+  padding: 10px;
+}
+
+button:hover {
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  background-color: #222222;
+}
+
+#totop {
+  text-decoration: none;
+  background-color: #414141;
+  border: solid 2px #222222;
+  color: #ffffff;
+  padding: 15px 10px;
+
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+
+  font-size: 1.5em;
+}
+
+#totop:hover {
+  background-color: #ffffff;
+  color: #222222;
+}
+
+#wrapper {
   margin: 0 2.5%;
 }
 
@@ -18,7 +54,6 @@ body {
   color: #222222;
 }
 
-
 img {
   width: 512px;
   display: block;
@@ -32,6 +67,7 @@ table {
   border:0.5px solid #222222;
   background-color: #ffffff;
   margin: 30px auto;
+  box-shadow: #001a62 0 0 10px;
 }
 
 th, td {
@@ -79,6 +115,7 @@ h1 {
 
   font-family: Rowdies, Arial, Helvetica, sans-serif;
   font-size: 3em;
+  text-shadow: #001a62 0 0 2px;
 }
 
 h2 {
@@ -86,8 +123,68 @@ h2 {
   text-align: center;
   font-family: Rowdies, Arial, Helvetica, sans-serif;
   text-decoration: underline;
+  text-shadow: #001a62 0 0 2px;
 }
 
 h2:not(nav h2) {
   margin-top: 40px;
+}
+
+
+/* DARK MODE COLORS */
+
+button.dark {
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  background-color: #191b27;
+}
+
+button.dark:hover {
+  color: #222222;
+  background-color: #ffffff;
+  border: 2px solid #393939;
+}
+
+#totop.dark {
+  background-color: #ffffff;
+  color: #222222;
+  border: solid 2px #ffffff;
+}
+
+#totop.dark:hover {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+h2.dark, h1.dark {
+  text-shadow: #ffffff 0 0 3px;
+}
+
+body.dark {
+  background-color: #191b27;
+  color: #ffffff;
+}
+
+table.dark {
+  border:0.5px solid #ffffff;
+  color: #000000;
+  box-shadow: #ffffff 0 0 10px;
+}
+
+img.dark {
+  box-shadow: #ffffff 0 0 20px;
+}
+
+a.dark {
+  color: #ffffff;
+  background-color: #191b27;
+}
+
+a.dark:hover {
+  background-color: #ffffff;
+  color: #191b27;
+}
+
+nav.dark {
+  border: solid #ffffff;
 }

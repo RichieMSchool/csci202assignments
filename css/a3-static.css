@@ -1,0 +1,82 @@
+a {
+    position: absolute;
+    top: 655px;
+
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
+
+    transition: all 0.3s;
+}
+
+a:hover {
+    background-color: #7e7e7e;
+    color: #000000;
+}
+
+#container {
+    display: flex;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+.left {
+    width: 245px;
+    height: 640px;
+    background-color: #000000;
+    overflow: hidden;
+    position: relative;
+}
+
+.right {
+    width: 379px;
+    height: 640px;
+    background: linear-gradient(to bottom, #726D71 0% 50%, #AFB7BA 50%);
+    overflow: hidden;
+    position: relative;
+}
+
+#container div div {
+    position: absolute;
+}
+
+.left .tri1 {
+
+    border-style: solid;
+    border-width: 222px 213px 0 0;
+    border-color: #9EA3A9 transparent transparent transparent;
+}
+
+.left .tri2 {
+    top: 389px;
+    border-style: solid;
+    border-width: 121px 0 121px 119px;
+    border-color: transparent transparent transparent #CFA149;
+}
+
+.left .tri3 {
+    top: 510px;
+    border-style: solid;
+    border-width: 0 119px 138px 119px;
+    border-color: transparent transparent #D7CFC4 #D7CFC4;
+}
+
+.right .tri1 {
+    
+    border-style: solid;
+    border-width: 233px 0 233px 233px;
+    top: -88px;
+    border-color: transparent transparent transparent #D9D0C7;
+}
+
+.right .tri2 {
+    top: -22px;
+    border-style: solid;
+    border-width: 400px 379px 400px 0;
+    border-color: transparent #B61908 transparent transparent;
+}
+
+.right .tri3 {
+    
+}

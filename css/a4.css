@@ -1,0 +1,28 @@
+body {
+    height: 100%;
+    width: 100%;
+}
+img {
+    /* Full height */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+#light {
+    clip-path: circle(0px at 100px 200px);
+    z-index: 100;
+}
+
+#dark-overlay {
+    z-index: 101;
+}
+
+#dark {
+    z-index: 99;
+}
+
+div {
+    position: absolute;
+    border: solid 1px #fc0;
+}

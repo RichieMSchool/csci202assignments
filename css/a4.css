@@ -10,8 +10,22 @@ img {
     height: 100%;
 }
 #light {
-    clip-path: circle(0px at 100px 200px);
+    clip-path: circle(0px at 0px 0px);
     z-index: 100;
+}
+
+#circle {
+    z-index: 1023;
+    position: absolute;
+
+    height: 700px;
+    width: 700px;
+
+    background-image: radial-gradient(transparent 50%, white 51%, transparent 54%);
+    /* border-radius: 50%;
+    border: 15px solid white;
+
+    border-image: linear-gradient(from center, darkblue, darkorchid); */
 }
 
 #dark-overlay {
@@ -20,9 +34,4 @@ img {
 
 #dark {
     z-index: 99;
-}
-
-div {
-    position: absolute;
-    border: solid 1px #fc0;
 }

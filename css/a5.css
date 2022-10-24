@@ -1,0 +1,24 @@
+* {
+    color: white;
+}
+
+h3 {
+    font-size: 3em;
+}
+
+textarea, input {
+    background-color: black;
+    font-size: larger;
+}
+
+td, textarea {
+    width: 100%;
+}
+
+input {
+    margin: 5px;
+}
+
+body {
+    background-color: #000810;
+}

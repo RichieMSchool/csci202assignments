@@ -1,0 +1,43 @@
+body {
+    background: #030912;
+    color: white;
+}
+
+.star {
+    z-index: -1;
+    position: absolute;
+    height: .5vh;
+    width: .5vh;
+    background-image: radial-gradient(white 1%, transparent 40%);
+}
+
+.sun {
+    position: absolute;
+    z-index: 0;
+    position: absolute;
+    height: 25vh;
+    width: 25vh;
+    background-image: radial-gradient(#f6b100 1%, #f6b100 40%, #dff05d 45%, #dff05d 55%, transparent 60%);
+
+}
+
+.ship {
+    position: absolute;
+    z-index: 2;
+    border: solid 10px gray;
+    background-color: #000023;
+    width: fit-content;
+}
+
+.ship h1 {
+    background-color: black;
+    color: white;
+    text-shadow: 0 0 3px white;
+    text-align: center;
+    margin-top: 0;
+    border: solid 10px #474138;
+}
+.ship li {
+    padding: 5px 40px;
+    text-shadow: 0 0 3px white;
+}

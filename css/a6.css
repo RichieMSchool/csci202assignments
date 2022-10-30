@@ -1,6 +1,7 @@
 body {
     background: #030912;
     color: white;
+    overflow: hidden;
 }
 
 .star {

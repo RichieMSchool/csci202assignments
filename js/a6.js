@@ -1,5 +1,9 @@
-sheight = window.screen.height;
-swidth = window.screen.width;
+// sheight = window.screen.height;
+sheight = window.innerHeight
+swidth = window.innerWidth;
+
+console.log(sheight);
+console.log(swidth)
 
 ships = []
 let i = 0;
@@ -30,7 +34,7 @@ $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
 
         if ($("#" + d['craft']).length == 0) {
             $('body').append(`<div class="ship" id=${d['craft']}><h1>${d['craft']}</h1></div>`);
-            ships.push([d['craft'], window.outerWidth/2,  Math.random() * window.outerHeight/2, Math.random() + .25, Math.random() + .25]);
+            ships.push([d['craft'], swidth/2,  Math.random() * sheight/2, Math.random() + .25, Math.random() + .25]);
         }
         else {
             $("#" + d['craft']).append('<li>' + d['name'] + '</li>')
@@ -45,12 +49,14 @@ $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
     var intervalId = window.setInterval(function() {
         ships.forEach(function(e) {
 
-            ewidth = $('#' + e[0]).width();
+            ewidth = $('#' + e[0]).width() + 20; // +20  because border
             eheight = $('#' + e[0]).height();
 
+            // move the ship
             e[1] += getdir(e[3]);
 
-            if (e[1] + ewidth + 45>= swidth) {
+            // check if ship hits edges
+            if (e[1] + ewidth >= swidth) {
                 e[3] = -1 * (Math.random() + .25);
             }
             else if (e[1] <= 0) {

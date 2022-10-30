@@ -1,11 +1,15 @@
-// sheight = window.screen.height;
-sheight = window.innerHeight
+sheight = window.innerHeight;
 swidth = window.innerWidth;
+speed = 35;
+
+function test (value) {
+    speed = value;
+}
 
 console.log(sheight);
 console.log(swidth)
 
-ships = []
+ships = [];
 let i = 0;
 
 $(document).ready(function () {
@@ -37,7 +41,7 @@ $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
             ships.push([d['craft'], swidth/2,  Math.random() * sheight/2, Math.random() + .25, Math.random() + .25]);
         }
         else {
-            $("#" + d['craft']).append('<li>' + d['name'] + '</li>')
+            $("#" + d['craft']).append('<li>' + d['name'] + '</li>');
         }
     });
 
@@ -54,6 +58,7 @@ $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
 
             // move the ship
             e[1] += getdir(e[3]);
+            e[2] += getdir(e[4]);
 
             // check if ship hits edges
             if (e[1] + ewidth >= swidth) {
@@ -70,7 +75,6 @@ $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
                 e[4] = Math.random() + .25;
             }
 
-            e[2] += getdir(e[4]);
             $('#' + e[0]).css({"left": `${e[1]}px`});
             $('#' + e[0]).css({"top": `${e[2]}px`});
         });
@@ -79,5 +83,5 @@ $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
 });
 
   function getdir(dir) {
-    return dir * 4;
+    return dir * 20 * (speed / 100);
   }

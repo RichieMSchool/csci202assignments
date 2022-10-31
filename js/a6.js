@@ -12,7 +12,34 @@ console.log(swidth)
 ships = [];
 let i = 0;
 
+
 $(document).ready(function () {
+    setup();
+    $(window).resize(function() {
+        setup();
+    });
+});
+
+function setup() {
+    sheight = window.innerHeight;
+    swidth = window.innerWidth;
+
+    $('.star').each(function () {
+        this.remove();
+    });
+
+    ships.forEach(function(e) {
+        ewidth = $('#' + e[0]).width() + 20; // +20  because border
+        eheight = $('#' + e[0]).height();
+        
+        if (e[1] + ewidth >= swidth) {
+            e[1] = Math.random() * (swidth - ewidth);
+        }
+
+        if (e[2] + eheight + 21>= sheight) {
+            e[2] = Math.random() * (sheight - ewidth);
+        }
+    });
 
     for (let i = 0; i < window.innerHeight + window.innerWidth; i++) {
         $('body').append('<div class="star"></div>');
@@ -27,8 +54,7 @@ $(document).ready(function () {
     $('.sun').each(function () {
         $(this).css({ "left": Math.random() * (swidth - (.25 * swidth)) ,  "top": Math.random() * sheight - (.25 * sheight)});
     });
-
-});
+}
 
 $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
     var number = data['number'];

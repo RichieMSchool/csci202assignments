@@ -61,14 +61,13 @@ $.getJSON('http://api.open-notify.org/astros.json?callback=?', function (data) {
     $('#SpacePeople').html(number);
 
     data['people'].forEach(function (d) {
-
         if ($("#" + d['craft']).length == 0) {
             $('body').append(`<div class="ship" id=${d['craft']}><h1>${d['craft']}</h1></div>`);
             ships.push([d['craft'], swidth/2,  Math.random() * sheight/2, Math.random() + .25, Math.random() + .25]);
         }
-        else {
-            $("#" + d['craft']).append('<li>' + d['name'] + '</li>');
-        }
+        
+        $("#" + d['craft']).append('<li>' + d['name'] + '</li>');
+        
     });
 
 

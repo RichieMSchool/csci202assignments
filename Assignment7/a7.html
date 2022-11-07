@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Assignment 7 | Mobile Website</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/a7.css">
+    <script src="../js/a7.js"></script>
+
+</head>
+
+<body>
+
+    <main>
+        <h1 class="visually-hidden"> WWU Art</h1>
+
+        <div class="px-4 py-5 my-5 text-center">
+            <img id="logo" class="d-block mx-auto mb-4" src="images/logo.jpg"
+                alt="Skyviewing Sculpture by Isamu Noguchi">
+            <h1 class="display-5 fw-bold">Western Washington University Art.</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4"></p>
+            </div>
+        </div>
+
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                    <img src="images/stadiumpiece_day.jpeg" id="stadium" class="d-block mx-lg-auto img-fluid" alt="Sculpture Stadium Piece by Bruce Nauman" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold lh-1 mb-3">Stadium Piece by Bruce Nauman</h1>
+                    <p class="lead">"In thinking about what he might propose for Western's campus, Nauman became intrigued with the area of campus south of the steps between Parks Hall (College of Business, housing business and speech pathology) and the Environmental Studies building. Perhaps, this major staircase triggered the notion that this was the public's ''front door'' to the University or that this standard, cultural idea of front stairs could be further examined in a more individual way." (Quote from <a href="https://westerngallery.wwu.edu/bruce-nauman-stadium-piece-1989-90">Western Gallery</a>)</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="changeImage('stadium', 'images/stadiumpiece_night.jpeg')">Night</button>
+                        <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="changeImage('stadium', 'images/stadiumpiece_day.jpeg')">Day</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                    <img src="images/untitled_near.jpeg" id="untitled" class="d-block mx-lg-auto img-fluid" alt="Sculpture Untitled by Robert Morris" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold lh-1 mb-3">Untitled by Robert Morris</h1>
+                    <p class="lead">"Morris' work, Untitled (Steam Work for Bellingham) (1971) is a special type of fountain that gurgles underground and swells to an amorphous column; then the misty cloud dissipates. Its point of origin was a U-shaped pipe above ground where steam escaped in one area from the University's heating system of underground pipes. In 1971, after participating in a symposium, Morris was commissioned to create his steam piece that was finally built in 1974.49 Morris re-planned this source of regulated but fluctuating power; he determined the amount of steam to be released, reconfigured its visual appearance, and re-sited the new work in the rolling landscape of south campus. When the fountain is turned off, only rocks fill his container, a plain square outlined by wood beams set in the ground. Natural environmental factors such as sun, wind, and condensation in the air affect the rate of evaporation and the shapes the steam will form. Economic factors such as energy conservation often erase the boundaries between those who love it and those who oppose it." (Quote from <a href="https://westerngallery.wwu.edu/robert-morris-untitled-steam-work-bellingham-1971">Western Gallery</a>)</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="changeImage('untitled', 'images/untitlied_far.jpg')">Far</button>
+                        <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="changeImage('untitled', 'images/untitled_near.jpeg')">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+
+
+</body>
+
+</html>

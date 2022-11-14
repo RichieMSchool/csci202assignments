@@ -1,0 +1,76 @@
+body {
+    background-color: #43b8f3;
+    overflow: hidden;
+}
+
+.cloudpiece {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    background-color: white;
+    border-radius: 80px;
+    color: #103243;
+
+    box-shadow: var(--hPos) 70px 20px #103243;
+}
+
+#cloudcontainer {
+    z-index: -1;
+}
+
+
+#housecontainer {
+    position: absolute;
+    bottom: 350px;
+}
+
+
+.house {
+    position: absolute;
+    left: 200px;
+}
+
+.housemain {
+    height: 200px;
+    width: 200px;
+    position: inherit;
+    top: 150px;
+    z-index: 2;
+}
+
+.houseroof {
+    height: 0;
+    width: 0;
+	border-left: 100px solid transparent;
+	border-right: 100px solid transparent;
+    position: inherit;
+    z-index: 1;
+}
+
+.housedoor {
+    height: 110px;
+    width: 60px;
+    margin-left: 70px;
+    position: inherit;
+    top: 240px;
+    z-index: 3;
+}
+
+.treetrunk {
+    width: 30px;
+    height: 100px;
+    background-color: #4a2502;
+    position: absolute;
+    bottom: 0;
+
+    z-index: 0;
+}
+
+.leaf {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-color: #004d00;
+    border-radius: 80px;
+    z-index: 1;
+}

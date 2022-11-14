@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 8 | Final Project Proposal</title>
+    <link rel="stylesheet" href="../css/a8.css">
+    <script src="../js/a8.js"></script>
+</head>
+<body>
+    <h1>Final Project Proposal</h1>
+    <p>
+        My end goal is to make a game that is very replayable due to random/procedural generation.
+    </p>
+    
+    <p>
+        My idea for the final is to make a 2D side scrolling infinite runner game, where the player has to move a character around using a mouse. Also, as a fun challenge, I want to make all of the visuals using only CSS. There will be a lot of background elements generated using JavaScript and CSS, like clouds and trees for example. There should be a point system showing the distance the player has traveled. 
+    </p>
+    <p>
+        The player’s speed will increase as time goes on, making the game harder, but also increasing the rate at which points are gained. There should be a good variety of obstacles, like walls moving horizontally, maybe some projectiles dropping from above, or lasers shooting from the side. The goal is to make sure the player is looking in all directions. All of the visuals for these elements are probably going to be made through pure CSS.
+    </p>
+
+    <p>Some of the obstacles I'm thinking of including are:
+        <ul>
+            <li>Walls that move left</li>
+            <li>Lasers that shoot horizontally across the screen</li>
+            <li>Alien ships at the top of the screen with lasers that toggle on and off</li>
+            <li>Fireworks shooting from the bottom</li>
+            <li>Not an obstacle, but maybe an item that gives the player an extra life</li>
+        </ul>
+    </p>
+
+    <p>
+        The only library I am planning on using is JQuery, mainly for tracking mouse movement, but I might find other uses for it down the line.
+    </p>
+
+    <br><br>
+    <h2>I have started working on a first draft, but concept drawings are below <h3><a href="../Final/final.html">Link to draft</a></h3></h2>
+    <br>
+    <h2>Here are some of the examples (Click on the image to open it):</h2>
+
+    <button onclick="changeImage('bi', 'images/labeledbaseimage.png')">Show Label</button>
+    <button onclick="changeImage('bi', 'images/baseimage.png')">Hide Label</button>
+    <a href="images/labeledbaseimage.png" id="bi"><img src="images/labeledbaseimage.png" alt=""></a>
+
+    
+    <button onclick="changeImage('i1', 'images/labeledfirstimage.png')">Show Label</button>
+    <button onclick="changeImage('i1', 'images/firstimage.png')">Hide Label</button>
+    <a href="images/labeledfirstimage.png" id="i1"><img src="images/labeledfirstimage.png" alt=""></a>
+
+    
+    <button onclick="changeImage('i2', 'images/labeledsecondimage.png')">Show Label</button>
+    <button onclick="changeImage('i2', 'images/secondimage.png')">Hide Label</button>
+    <a href="images/labeledsecondimage.png" id="i2"><img src="images/labeledsecondimage.png" alt=""></a>
+
+</body>
+</html>

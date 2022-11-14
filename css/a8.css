@@ -1,0 +1,41 @@
+
+body {
+    margin: 0 5%;
+    background-color :#161a27;
+    color: white;
+}
+
+a {
+    color: aqua;
+    font-size: xx-large;
+    padding: 15px 10px;
+    border: 3px solid white;
+}
+
+a:hover {
+    color: pink;
+    border: 3px solid white;
+    border-style: dashed;
+}
+
+h1 {
+    text-align: center;
+}
+
+p, li{
+    font-size: larger;
+    margin: 30px 5%;
+}
+
+img {
+    width: 50%;
+    margin-bottom: 50px;
+    border: 3px solid black;
+}
+
+button {
+    display: block;
+    margin-bottom: 10px;
+    width: 10%;
+    height: 40px;
+}

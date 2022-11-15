@@ -75,7 +75,7 @@ window.setInterval(function(){
   window.setInterval(function() {
     if (document.hasFocus()) {
         //Speeds up the player
-        speed += 0.02;
+        speed += 0.01;
     }
   }, 1000);
 
@@ -91,52 +91,28 @@ window.setInterval(function(){
             return
         }
         
-
         //Increase Score
         distance++;
         $('#distval').html(distance);
 
-
-        //Generate cloud
-        if (distance % 13 == 0) {
+        //Generate Cloud
+        if (distance % 13 == 0 && $('.cloudpiece').length < 14) {
             generateCloud(swidth);
         }
 
         //Generate House
-        if (distance % 2 == 0) {
+        if (distance % 2 == 1 && $(".house").length < 4) {
             generateHouse(swidth);
         }
 
         //Generate Tree
         if (distance % 2 == 0) {
+            console.log($(".treetrunk").length < 5);
             generateTree(swidth + 100);
         }
 
-
-
-        console.log(speed);
         setTimeout(move, 800 / speed)
     }
-
-    
-//   window.setInterval(function() {
-//     if (document.hasFocus()) {
-//         generateCloud(swidth);
-//     }
-//   }, 6000);
-
-//   window.setInterval(function() {
-//     if (document.hasFocus()) {
-//         generateHouse(swidth);
-//     }
-//   }, 750);
-
-  
-//   window.setInterval(function() {
-//     if (document.hasFocus()) {
-//         generateTree(swidth + 200);
-//     }
-//   }, 600);
 
   $(document).ready(function () {
     setup();
@@ -200,8 +176,6 @@ function generateLeaf(x, y) {
     
     $("#treecontainer").append(`<div class="leaf" style="bottom: ${y}px; left: ${x}px"></div>`);
 }
-
-//<div class="cloudpiece" style="left: 142.919px;"></div>
 
 function randomColor() {
     do {

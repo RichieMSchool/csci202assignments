@@ -2,6 +2,10 @@ sheight = window.innerHeight;
 swidth = window.innerWidth;
 init = false;
 
+speed = 1;
+distance = 0;
+
+// Move Clouds
 window.setInterval(function(){
     if (!document.hasFocus()) {
         return
@@ -13,11 +17,12 @@ window.setInterval(function(){
         if (pos.left + $(this).width() <= 0) {
             $(this).remove(); 
         }
-        $(this).css({"left": `${pos.left - (swidth/(800 + (Math.random() * 800)))}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243`});
+        $(this).css({"left": `${pos.left - ((swidth/(800 + (Math.random() * 800 / speed))) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px #103243`});
     });
 
   }, 17);
 
+  // Move Houses
 window.setInterval(function(){
     if (!document.hasFocus()) {
         return
@@ -30,13 +35,14 @@ window.setInterval(function(){
             $(this).remove(); 
         }
 
-        $(this).css({"left": `${pos.left - (swidth/(200))}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243`});
+        $(this).css({"left": `${pos.left - (swidth/(200)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243`});
 
         $(this).find(".housedoor").css({"box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 5px 10px #000000aa`})
         $(this).find(".housemain").css({"box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 0px 30px #000000`})
     });
     }, 17);
 
+    // Move Trees
 window.setInterval(function(){
     if (!document.hasFocus()) {
         return
@@ -50,7 +56,7 @@ window.setInterval(function(){
             $(this).remove(); 
         }
 
-        $(this).css({"left": `${pos.left - (swidth/(400))}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa`});
+        $(this).css({"left": `${pos.left - (swidth/(400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa`});
     });
 
     $('.leaf').each(function () {
@@ -60,28 +66,77 @@ window.setInterval(function(){
             $(this).remove(); 
         }
 
-        $(this).css({"left": `${pos.left - (swidth/(400))}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa`});
+        $(this).css({"left": `${pos.left - (swidth/(400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa`});
     });
     }, 17);
 
-  window.setInterval(function() {
-    if (document.hasFocus()) {
-        generateCloud(swidth);
-    }
-  }, 6000);
+
 
   window.setInterval(function() {
     if (document.hasFocus()) {
-        generateHouse(swidth);
+        //Speeds up the player
+        speed += 0.02;
     }
-  }, 750);
+  }, 1000);
+
+
+    //Spawning and Scoring Logic
+
+
+    setTimeout(move, 800 / speed)
+
+    function move() {
+        if (!document.hasFocus()) {
+            setTimeout(move, 5000 / speed)
+            return
+        }
+        
+
+        //Increase Score
+        distance++;
+        $('#distval').html(distance);
+
+
+        //Generate cloud
+        if (distance % 13 == 0) {
+            generateCloud(swidth);
+        }
+
+        //Generate House
+        if (distance % 2 == 0) {
+            generateHouse(swidth);
+        }
+
+        //Generate Tree
+        if (distance % 2 == 0) {
+            generateTree(swidth + 100);
+        }
+
+
+
+        console.log(speed);
+        setTimeout(move, 800 / speed)
+    }
+
+    
+//   window.setInterval(function() {
+//     if (document.hasFocus()) {
+//         generateCloud(swidth);
+//     }
+//   }, 6000);
+
+//   window.setInterval(function() {
+//     if (document.hasFocus()) {
+//         generateHouse(swidth);
+//     }
+//   }, 750);
 
   
-  window.setInterval(function() {
-    if (document.hasFocus()) {
-        generateTree(swidth + 200);
-    }
-  }, 600);
+//   window.setInterval(function() {
+//     if (document.hasFocus()) {
+//         generateTree(swidth + 200);
+//     }
+//   }, 600);
 
   $(document).ready(function () {
     setup();

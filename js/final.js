@@ -106,8 +106,7 @@ window.setInterval(function(){
         }
 
         //Generate Tree
-        if (distance % 2 == 0) {
-            console.log($(".treetrunk").length < 5);
+        if (distance % 2 == 0 && $(".treetrunk").length < 5) {
             generateTree(swidth + 100);
         }
 

@@ -150,12 +150,19 @@ window.setInterval(function(){
     playerX += clamp(diffX, -spdX, spdX);
     playerY += clamp(diffY, -spdY, spdY);
 
+    rotation = (spdX / 1.5) + (spdY / 1.5);
+
     // Move the Player
     $('#player').css(
         {"top": `${playerY}px`,  // Vertical Position
          "left": ` ${playerX}px`, // Horizontal position
-         "transform": `rotate(${clamp((spdX / 1.5) + (spdY / 1.5), -50, 50)}deg)`
+         "transform": `rotate(${clamp(rotation, -50, 50)}deg)`, // Rotation
         });
+    
+    $('#iris').css({"top": `${5 + (clamp(spdY, -2, 2))}px`, "left": `${5 + (clamp(spdX, -2, 2))}px`})
+
+        // Use a box shadow to show where the player is (I spent way too much time on this considering it is purely cosmetic but it might be worth it idk it was pain but it looks cool now?????????????????????????????????????)
+    $("#armL, #armR, #legL, #legR, #body, #player").css({"box-shadow": `${diffX - spdX * 2}px ${diffY - trigIsUsefulNow(rotation, diffX)}px ${((Math.abs(spdX) + Math.abs(spdY))) + 5}px #ffffffa5`})
 
   }, 17);
 
@@ -231,4 +238,8 @@ function randomHouseColor() {
         g = "0" + g;
     }
     return `${r.toString(16)}${g}00`;
+}
+
+function trigIsUsefulNow(deg, adjacent) {
+    return Math.tan(deg * Math.PI / 180) * adjacent;
 }

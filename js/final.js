@@ -11,6 +11,8 @@ playerY = 0;
 curX = 0;
 curY = 0;
 
+lagSpd = 30;
+
 // Move Clouds
 window.setInterval(function(){
     if (!document.hasFocus()) {
@@ -143,8 +145,8 @@ window.setInterval(function(){
     diffY = curY - playerY;
 
     // Get the speed of the character for this step
-    spdX = (diffX / 8);
-    spdY = (diffY / 8);
+    spdX = (diffX / lagSpd);
+    spdY = (diffY / lagSpd);
 
     // Get the new player Position
     playerX += clamp(diffX, -spdX, spdX);
@@ -159,9 +161,10 @@ window.setInterval(function(){
          "transform": `rotate(${clamp(rotation, -50, 50)}deg)`, // Rotation
         });
     
-    $('#iris').css({"top": `${5 + (clamp(spdY, -2, 2))}px`, "left": `${5 + (clamp(spdX, -2, 2))}px`})
+    // Make the eyes follow the cursor
+    $('#iris').css({"top": `${5 + (clamp(spdY, -2, 2))}px`, "left": `${5 + (clamp(spdX, -2, 2))}px`});
 
-        // Use a box shadow to show where the player is (I spent way too much time on this considering it is purely cosmetic but it might be worth it idk it was pain but it looks cool now?????????????????????????????????????)
+    // Use a box shadow to show where the player is (I spent way too much time on this considering it is purely cosmetic but it might be worth it idk it was pain but it looks cool now?????????????????????????????????????)
     $("#armL, #armR, #legL, #legR, #body, #player").css({"box-shadow": `${diffX - spdX * 2}px ${diffY - trigIsUsefulNow(rotation, diffX)}px ${((Math.abs(spdX) + Math.abs(spdY))) + 5}px #ffffffa5`})
 
   }, 17);

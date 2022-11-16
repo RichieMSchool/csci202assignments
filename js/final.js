@@ -5,6 +5,12 @@ init = false;
 speed = 1;
 distance = 0;
 
+playerX = 0;
+playerY = 0;
+
+curX = 0;
+curY = 0;
+
 // Move Clouds
 window.setInterval(function(){
     if (!document.hasFocus()) {
@@ -82,7 +88,6 @@ window.setInterval(function(){
 
     //Spawning and Scoring Logic
 
-
     setTimeout(move, 800 / speed)
 
     function move() {
@@ -121,6 +126,42 @@ window.setInterval(function(){
 });
 
 
+// Player movement
+
+$(document).on('mousemove', function(e){
+    curX = e.pageX - 55;
+    curY = e.pageY - 22;
+});
+
+window.setInterval(function(){
+    if (!document.hasFocus()) {
+        return
+    }
+
+    // Get difference beteween the character's position and the mouse
+    diffX = curX - playerX;
+    diffY = curY - playerY;
+
+    // Get the speed of the character for this step
+    spdX = (diffX / 8);
+    spdY = (diffY / 8);
+
+    // Get the new player Position
+    playerX += clamp(diffX, -spdX, spdX);
+    playerY += clamp(diffY, -spdY, spdY);
+
+    // Move the Player
+    $('#player').css(
+        {"top": `${playerY}px`,  // Vertical Position
+         "left": ` ${playerX}px`, // Horizontal position
+         "transform": `rotate(${clamp((spdX / 1.5) + (spdY / 1.5), -50, 50)}deg)`
+        });
+
+  }, 17);
+
+// FUNCTIONS
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
 function setup() {
     sheight = window.innerHeight;
     swidth = window.innerWidth;
@@ -136,9 +177,9 @@ function setup() {
 function generateHouse(x) {
     $("#housecontainer").append(`
     <div class="house" style="left: ${x}px;">
-        <div class="houseroof" style="border-bottom: 150px solid #${randomColor()};"></div>
-        <div class="housemain" style="background-color: #${randomColor()};"></div>
-        <div class="housedoor" style="background-color: #${randomColor()};"></div>
+        <div class="houseroof" style="border-bottom: 150px solid #${randomHouseColor()};"></div>
+        <div class="housemain" style="background-color: #${randomHouseColor()};"></div>
+        <div class="housedoor" style="background-color: #${randomHouseColor()};"></div>
     </div>
 `)
 }
@@ -176,10 +217,18 @@ function generateLeaf(x, y) {
     $("#treecontainer").append(`<div class="leaf" style="bottom: ${y}px; left: ${x}px"></div>`);
 }
 
-function randomColor() {
-    do {
-        s = Math.floor(Math.random()*16777215).toString(16);
-    } while(s.length != 6);
-    
-    return s;
+function randomHouseColor() {    
+    s = (Math.random());
+
+    r = (Math.floor(130 * s)).toString(16);
+    g = (Math.floor(45 * s)).toString(16);
+
+    if (r.length < 2) {
+        r = "0" + r;
+    }
+
+    if (g.length < 2) {
+        g = "0" + g;
+    }
+    return `${r.toString(16)}${g}00`;
 }

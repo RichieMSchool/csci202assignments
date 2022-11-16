@@ -3,6 +3,8 @@ body {
     overflow: hidden;
 }
 
+/* BG Stuff */
+
 .cloudpiece {
     position: absolute;
     width: 140px;
@@ -75,6 +77,19 @@ body {
     z-index: 1;
 }
 
+#bgoverlay {
+    background-color: #97e7ff2b;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    z-index: 5;
+}
+
+/* Score */
+
 #distance {
     position: absolute;
     top: 5%;
@@ -85,13 +100,85 @@ body {
     z-index: 101;
 }
 
-#bgoverlay {
-    background-color: #97e7ff2b;
+/* Player */
+
+
+/* player is the head */
+#player {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    top:50%;
+    left: 50%;
+
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    border-radius: 80px;
+    color: #103243;
 
     z-index: 100;
 }
+
+
+#body {
+
+    position: absolute;
+    top: 15px;
+    left: -70px;
+    width: 80px;
+    height: 15px;
+    background-color: black;
+    border-radius: 80px;
+}
+
+#armL, #armR, #legL, #legR {
+    position: absolute;
+    width: 90px;
+    height: 8px;
+    background-color: black;
+    border-radius: 80px;
+}
+
+#armL {
+    top: 20px;
+    left: -10px;
+    transform: rotate(5deg);
+}
+
+#armR {
+    top: 15px;
+    left: -10px;
+    transform: rotate(-5deg);
+}
+
+#eye {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 80px;
+}
+
+#iris {
+    position: absolute;
+    left: 8px;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    background-color: black;
+    border-radius: 80px;
+}
+
+#legL {
+    left: -130px;
+    top: 22px;
+    transform: rotate(-5deg);
+}
+
+#legR {
+    left: -130px;
+    top: 16px;
+    transform: rotate(2deg);
+}
+

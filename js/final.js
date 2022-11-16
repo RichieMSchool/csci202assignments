@@ -1,5 +1,5 @@
-sheight = window.innerHeight;
-swidth = window.innerWidth;
+sheight = 1080;
+swidth = 1920;
 init = false;
 
 speed = 1;
@@ -131,8 +131,8 @@ window.setInterval(function(){
 // Player movement
 
 $(document).on('mousemove', function(e){
-    curX = e.pageX - 55;
-    curY = e.pageY - 22;
+    curX = clamp(e.pageX - 55, 0, swidth);
+    curY = clamp(e.pageY - 22, 0, sheight - 30);
 });
 
 window.setInterval(function(){
@@ -173,8 +173,8 @@ window.setInterval(function(){
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 function setup() {
-    sheight = window.innerHeight;
-    swidth = window.innerWidth;
+    sheight = 1080;
+    swidth = 1920;
 
     if (!init) {
         generateCloud(swidth * 0.33);

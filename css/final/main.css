@@ -3,6 +3,33 @@ body {
     overflow: hidden;
 }
 
+#gamecontainer {
+    max-width: 1920px;
+    max-height: 1080px;
+}
+
+#borderH {
+    position: absolute;
+    top: 1080px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+
+    z-index: 200;
+}
+
+#borderW {
+    position: absolute;
+    top: 0;
+    left: 1920px;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+
+    z-index: 200;
+}
+
 /* BG Stuff */
 
 .cloudpiece {
@@ -22,8 +49,8 @@ body {
 
 
 #housecontainer {
-    position: absolute;
-    bottom: 350px;
+    position: relative;
+    top: 730px;
 }
 
 
@@ -90,8 +117,8 @@ body {
 
 /* Score */
 
-#distance {
-    position: absolute;
+#gamecontainer #distance {
+    position: relative;
     top: 5%;
     width: 100%;
     text-align: center;

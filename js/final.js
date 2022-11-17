@@ -173,8 +173,11 @@ window.setInterval(function(){
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 function setup() {
-    sheight = 1080;
-    swidth = 1920;
+    if(window.innerHeight < sheight|| window.innerWidth < swidth) {
+        $("#reswarning").css({"opacity": 1});
+    } else {
+        $("#reswarning").css({"opacity": 0});
+    }
 
     if (!init) {
         generateCloud(swidth * 0.33);

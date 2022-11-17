@@ -4,6 +4,12 @@ body {
     background-color: #43b8f3;
     overflow: hidden;
     font-family: 'Bebas Neue', Helvetica, sans-serif;
+
+    transition: background-color 3s;
+}
+
+body.night {
+    background-color: #01060f;
 }
 
 #gamecontainer {
@@ -53,9 +59,12 @@ body {
     height: 140px;
     background-color: white;
     border-radius: 80px;
-    color: #103243;
+    color: #103243;    
+    transition: background-color 3s;
+}
 
-    box-shadow: var(--hPos) 70px 20px #103243;
+.cloudpiece.night {
+    background-color: black;
 }
 
 #cloudcontainer {
@@ -80,6 +89,7 @@ body {
     position: inherit;
     top: 150px;
     z-index: 2;
+    transition: background-color 3s;
 }
 
 .houseroof {
@@ -89,6 +99,7 @@ body {
 	border-right: 100px solid transparent;
     position: inherit;
     z-index: 1;
+    transition: border-bottom 3s;
 }
 
 .housedoor {
@@ -98,6 +109,7 @@ body {
     position: inherit;
     top: 240px;
     z-index: 3;
+    transition: background-color 3s;
 }
 
 .treetrunk {
@@ -107,7 +119,13 @@ body {
     position: absolute;
     bottom: 0;
 
+    transition: background-color 3s;
+
     z-index: 0;
+}
+
+.treetrunk.night {
+    background-color: #000000
 }
 
 .leaf {
@@ -117,6 +135,11 @@ body {
     background-color: #004d00;
     border-radius: 80px;
     z-index: 1;
+    transition: background-color 3s;
+}
+
+.leaf.night {
+    background-color: #000300;
 }
 
 
@@ -132,6 +155,13 @@ body {
     top: 0;
     left: 0;
 
+    transition: background-color 3s;
+
+    z-index: 5;
+}
+
+#bgoverlay.night {
+    background-color: #071e2474;
     z-index: 5;
 }
 
@@ -196,6 +226,18 @@ body {
 #distance {
     font-size: 30px;
     background-color: lightskyblue;
+}
+
+#distance.night {
+    box-shadow: 0px 0px 20px lightblue;
+}
+
+#speed.night {
+    box-shadow: 0px 0px 20px #fa8787;
+}
+
+#lives.night {
+    box-shadow: 0px 0px 20px #87fa9c;
 }
 
 #speed {

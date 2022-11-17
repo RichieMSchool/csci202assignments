@@ -3,7 +3,7 @@ swidth = 1920;
 init = false;
 
 speed = 1;
-distance = 0;
+distance = 1;
 
 playerX = 0;
 playerY = 0;
@@ -14,8 +14,14 @@ curY = 0;
 lagSpd = 30;
 lives = 3;
 
+isDay = true;
+
 
 // MOVING BACKGROUNDS
+
+const cloudshadowday = "#103243";
+const cloudshadownight = "#000000";
+curcloudshadow = cloudshadowday;
 
 // Move Clouds
 window.setInterval(function () {
@@ -29,7 +35,7 @@ window.setInterval(function () {
         if (pos.left + $(this).width() <= 0) {
             $(this).remove();
         }
-        $(this).css({ "left": `${pos.left - ((swidth / (800 + (Math.random() * 800 / speed))) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px #103243` });
+        $(this).css({ "left": `${pos.left - ((swidth / (800 + (Math.random() * 800 / speed))) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px ${curcloudshadow}` });
     });
 
 }, 17);
@@ -181,11 +187,55 @@ var speedInterval = window.setInterval(function () {
 
 setTimeout(move, 800 / speed)
 
+dayShift = 500;
+
 function move() {
     if (!document.hasFocus()) {
-        setTimeout(move, 5000 / speed)
+        setTimeout(move, 800 / speed)
         return
     }
+
+
+    //Change DayTime
+    if (distance % dayShift == 0) {
+        isDay = !isDay;
+
+        if(!isDay) {
+            $('body').addClass("night");
+            $("#bgoverlay").addClass("night");
+            $(".treetrunk").addClass("night");
+            $(".leaf").addClass("night");
+
+            $(".cloudpiece").addClass("night");
+            curcloudshadow = cloudshadownight;
+
+            $(".housemain").css({"background-color": `#${randomHouseColor()}`});
+            $(".housedoor").css({"background-color": `#${randomHouseColor()}`});
+            $(".houseroof").css({"border-bottom": `150px solid #${randomHouseColor()}`});
+
+            $("#speed").addClass("night");
+            $("#lives").addClass("night");
+            $("#distance").addClass("night");
+
+        } else {
+            $("body").removeClass("night");
+            $("#bgoverlay").removeClass("night");
+            $(".treetrunk").removeClass("night");
+            $(".leaf").removeClass("night");
+            curcloudshadow = cloudshadownight;
+            $(".cloudpiece").removeClass("night");
+            $(".housemain").css({"background-color": `#${randomHouseColor()}`});
+            $(".housedoor").css({"background-color": `#${randomHouseColor()}`});
+            $(".houseroof").css({"border-bottom": `150px solid #${randomHouseColor()}`});
+
+            $("#speed").removeClass("night");
+            $("#lives").removeClass("night");
+            $("#distance").removeClass("night");
+        }
+
+        dayShift += Math.floor(500 * speed);
+    }
+
 
     //Increase Score
     distance++;
@@ -207,17 +257,16 @@ function move() {
     }
 
     //Spawn PowerUp
-    if (distPower == distance) {
+    if (distPower <= distance) {
         spawnRandomPower();
-        distPower += newPowerSpawnTime();
+        distPower = distance + newPowerSpawnTime();
     }
 
     //Spawn Obstacle
-    if (distObstacle == distance) {
+    if (distObstacle <= distance) {
         SpawnRandomObstacle();
-        distObstacle += newObstacleSpawnTime();
+        distObstacle = distance + newObstacleSpawnTime();
     }
-
 
     setTimeout(move, 800 / speed)
 }
@@ -268,7 +317,7 @@ window.setInterval(function () {
     $('#iris').css({ "top": `${5 + (clamp(spdY, -2, 2))}px`, "left": `${5 + (clamp(spdX, -2, 2))}px` });
 
     // Use a box shadow to show where the player is (I spent way too much time on this considering it is purely cosmetic but it might be worth it idk it was pain but it looks cool now?????????????????????????????????????)
-    $("#armL, #armR, #legL, #legR, #body, #player").css({ "box-shadow": `${diffX - spdX * 2}px ${diffY - trigIsUsefulNow(rotation, diffX)}px ${((Math.abs(spdX) + Math.abs(spdY))) + 5}px #ffffffa5` })
+    $("#armL, #armR, #legL, #legR, #body, #player").css({ "box-shadow": `${diffX - spdX * 2}px ${diffY - findTanOpposite(rotation, diffX)}px ${((Math.abs(spdX) + Math.abs(spdY))) + 5}px #ffffffa5` })
 
 }, 17);
 
@@ -310,14 +359,14 @@ function generateCloud(x) {
         let height = (180 - (cur / 2));
         width = (height - 15) + (Math.random() * 30);
         x += cur;
-        $("#cloudcontainer").append(`<div class="cloudpiece" style="left: ${x}px; top: ${Math.random() * 100}px; width: ${width}px; height: ${height}px"></div>`);
+        $("#cloudcontainer").append(`<div class="cloudpiece ${isDay ? "": "night"}" style="left: ${x}px; top: ${Math.random() * 100}px; width: ${width}px; height: ${height}px"></div>`);
     }
 }
 
 function generateTree(x) {
     height = 250 + (Math.random() * 200);
 
-    $("#treecontainer").append(`<div class="treetrunk" style="height: ${height}px; left: ${x}px"></div>`);
+    $("#treecontainer").append(`<div class="treetrunk ${isDay ? "": "night"}" style="height: ${height}px; left: ${x}px"></div>`);
 
     generateLeaf(x + 30, height + -80)
     generateLeaf(x - 60, height + -80)
@@ -331,11 +380,18 @@ function generateLeaf(x, y) {
     x += (Math.random() * 20) - 40
     y += (Math.random() * 20) - 40
 
-    $("#treecontainer").append(`<div class="leaf" style="bottom: ${y}px; left: ${x}px"></div>`);
+    $("#treecontainer").append(`<div class="leaf ${isDay ? "": "night"}" style="bottom: ${y}px; left: ${x}px"></div>`);
 }
 
 function randomHouseColor() {
+
     s = (Math.random());
+
+    if(!isDay) {
+        s = (s/4);
+    } else {
+        s = (1 - (s/2));
+    }
 
     r = (Math.floor(130 * s)).toString(16);
     g = (Math.floor(45 * s)).toString(16);
@@ -350,7 +406,7 @@ function randomHouseColor() {
     return `${r.toString(16)}${g}00`;
 }
 
-function trigIsUsefulNow(deg, adjacent) {
+function findTanOpposite(deg, adjacent) {
     return Math.tan(deg * Math.PI / 180) * adjacent;
 }
 
@@ -416,7 +472,7 @@ function spawnWall() {
 }
 
 function newObstacleSpawnTime() {
-    return Math.floor((Math.random() * 4) + 14);
+    return Math.floor((Math.random() * 6) + 12);
 }
 
 function newPowerSpawnTime() {

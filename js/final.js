@@ -82,8 +82,35 @@ window.setInterval(function () {
     });
 }, 17);
 
-// MOVING POWERUPS
-//Move Speed Powerup
+//MOVING OBSTACLES
+
+//Moving Walls
+
+window.setInterval(function () {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.wall').each(function () {
+        
+        pos = $(this).position();
+
+        if (pos.left + $(this).width() <= 0) {
+            $(this).remove();
+        }
+
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+
+        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
+    });
+
+}, 17);
+
+
+//MOVING POWERUPS
 
 SPDirCnt = 0;
 SPDir = 1;
@@ -138,8 +165,12 @@ window.setInterval(function () {
 
 // Speed changes
 
-window.setInterval(function () {
+var speedInterval = window.setInterval(function () {
     if (document.hasFocus()) {
+        if (speed >= 6.5) {
+            speed = 6.5;
+            clearInterval(speedInterval)
+        }
         //Speeds up the player
         speed += 0.01;
     }
@@ -176,11 +207,17 @@ function move() {
     }
 
     //Spawn PowerUp
-
     if (distPower == distance) {
         spawnRandomPower();
         distPower += newPowerSpawnTime();
     }
+
+    //Spawn Obstacle
+    if (distObstacle == distance) {
+        SpawnRandomObstacle();
+        distObstacle += newObstacleSpawnTime();
+    }
+
 
     setTimeout(move, 800 / speed)
 }
@@ -317,19 +354,51 @@ function trigIsUsefulNow(deg, adjacent) {
     return Math.tan(deg * Math.PI / 180) * adjacent;
 }
 
+function hurtPlayer() {
+    $("#hurtoverlay").addClass('hurt')
+    .on("animationend", function(){
+    $(this).removeClass('hurt');
+  });
+
+  lives--;
+  $("#lifeval").html(lives);
+
+  $("#obstaclecontainer").empty();
+}
+
 // POWERS AND OBSTACLE FUNCTIONS
 
 powerFuncs = [spawnSpeedUp, spawnLifeUp]
+obstacleFuncs = [spawnWall]
 
+distObstacle = newObstacleSpawnTime();
 distPower = newPowerSpawnTime();
 
+function SpawnRandomObstacle() {
+    
+    obstacleFuncs[Math.floor(Math.random() * 1)]();
+}
+
+function spawnWall() {
+
+    // Choose if wall comes from top or bottom of screen
+
+    if (Math.random() < .5) {
+        offset = -10 - (Math.random() * 500);
+    }
+    else {
+        offset = (sheight - 690) + (Math.random() * 500)
+    }
+
+    $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset}px; left: ${swidth}px;"></div>`)
+}
+
+function newObstacleSpawnTime() {
+    return Math.floor((Math.random() * 4) + 14)
+}
 
 function newPowerSpawnTime() {
     return Math.floor((Math.random() * 100) + 100)
-}
-
-function SpawnRandomObstacle() {
-
 }
 
 function spawnRandomPower() {

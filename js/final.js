@@ -154,7 +154,7 @@ window.setInterval(function () {
             $(this.remove());
         }
 
-        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "top": `${pos.top + SPDir}px`});
+        $(this).css({ "left": `${pos.left - ((swidth/600) * speed)}px`, "top": `${pos.top + SPDir}px`});
     });
 
 }, 17);

@@ -175,6 +175,13 @@ function move() {
         generateTree(swidth + 100);
     }
 
+    //Spawn PowerUp
+
+    if (distPower == distance) {
+        spawnRandomPower();
+        distPower += newPowerSpawnTime();
+    }
+
     setTimeout(move, 800 / speed)
 }
 
@@ -232,9 +239,6 @@ window.setInterval(function () {
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 function setup() {
-
-    spawnSpeedUp(500, 500)
-    spawnLifeUp(1000, 1000);
 
     if (window.innerHeight < sheight || window.innerWidth < swidth) {
         $("#reswarning").css({ "opacity": 1 });
@@ -321,7 +325,7 @@ distPower = newPowerSpawnTime();
 
 
 function newPowerSpawnTime() {
-    return (Math.random() * 100) + 50
+    return Math.floor((Math.random() * 100) + 100)
 }
 
 function SpawnRandomObstacle() {
@@ -329,6 +333,10 @@ function SpawnRandomObstacle() {
 }
 
 function spawnRandomPower() {
+    if (lagSpd == 1) {
+        spawnLifeUp((Math.random() * sheight/2) + (sheight / 4));
+    }
+
     powerFuncs[Math.floor(Math.random() * 2)](swidth, (Math.random() * sheight/2) + (sheight / 4))
 }
 

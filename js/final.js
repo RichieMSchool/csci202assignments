@@ -364,6 +364,20 @@ function hurtPlayer() {
   $("#lifeval").html(lives);
 
   $("#obstaclecontainer").empty();
+
+
+  //Player dies
+  if (lives == 0) {
+    const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
+
+    $("#endscreen").html(`<h1>GAME OVER</h1><h2>Score:<span>${distance}</span></h2><h3><a href="./final.html">Click Here to Restart<a></h3>`)
+
+    // Clear any timeout/interval up to that id
+    for (let i = 1; i < interval_id; i++) {
+        window.clearInterval(i);
+    }
+
+  }
 }
 
 // POWERS AND OBSTACLE FUNCTIONS

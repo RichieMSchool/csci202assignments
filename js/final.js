@@ -154,7 +154,7 @@ window.setInterval(function () {
             $(this.remove());
         }
 
-        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "top": `${pos.top + SPDir}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
+        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "top": `${pos.top + SPDir}px`});
     });
 
 }, 17);
@@ -381,24 +381,32 @@ function SpawnRandomObstacle() {
 
 function spawnWall() {
 
-    // Choose if wall comes from top or bottom of screen
-
-    if (Math.random() < .5) {
+    // Choose if wall is doubled, comes from the top, or the bottom
+    let rand = Math.random();
+    if (rand < .2) {
+        // From top
         offset = -10 - (Math.random() * 500);
     }
+    else if (rand < .4){
+        // From Bottom
+        offset = (sheight - 690) + (Math.random() * 500);
+    }
     else {
-        offset = (sheight - 690) + (Math.random() * 500)
+
+        gap = 200 + (Math.random() * 300);
+        offset = -10 - (Math.random() * 500);
+        $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset + gap + 700}px; left: ${swidth}px;"></div>`);
     }
 
-    $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset}px; left: ${swidth}px;"></div>`)
+    $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset}px; left: ${swidth}px;"></div>`);
 }
 
 function newObstacleSpawnTime() {
-    return Math.floor((Math.random() * 4) + 14)
+    return Math.floor((Math.random() * 4) + 14);
 }
 
 function newPowerSpawnTime() {
-    return Math.floor((Math.random() * 100) + 100)
+    return Math.floor((Math.random() * 100) + 100);
 }
 
 function spawnRandomPower() {
@@ -406,24 +414,24 @@ function spawnRandomPower() {
         spawnLifeUp((Math.random() * sheight/2) + (sheight / 4));
     }
 
-    powerFuncs[Math.floor(Math.random() * 2)](swidth, (Math.random() * sheight/2) + (sheight / 4))
+    powerFuncs[Math.floor(Math.random() * 2)](swidth, (Math.random() * sheight/2) + (sheight / 4));
 }
 
 function spawnSpeedUp(x, y) {
     $("#obstaclecontainer").append(`<div class="speeditem power" style = "left: ${x}px; top: ${y}px">
-    <div class="speedVisA" style="top:6px">
+    <div class="speedVisA" style="top:13px">
         <div class="speedVisAL"></div>
         <div class="speedVisAR"></div>
     </div>
-    <div class="speedVisA" style="top:20px">
+    <div class="speedVisA" style="top:29px">
         <div class="speedVisAL"></div>
         <div class="speedVisAR"></div>
     </div>
-</div>`)
+</div>`);
 }
 
 function spawnLifeUp(x, y) {
     $("#obstaclecontainer").append(`<div class="lifeitem power" style = "left: ${x}px; top: ${y}px">
     <div class="lifeVisPlus"> +</div>
-</div>`)
+</div>`);
 }

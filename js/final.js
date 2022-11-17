@@ -12,9 +12,13 @@ curX = 0;
 curY = 0;
 
 lagSpd = 30;
+lives = 3;
+
+
+// MOVING BACKGROUNDS
 
 // Move Clouds
-window.setInterval(function(){
+window.setInterval(function () {
     if (!document.hasFocus()) {
         return
     }
@@ -23,106 +27,160 @@ window.setInterval(function(){
         pos = $(this).position();
 
         if (pos.left + $(this).width() <= 0) {
-            $(this).remove(); 
+            $(this).remove();
         }
-        $(this).css({"left": `${pos.left - ((swidth/(800 + (Math.random() * 800 / speed))) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px #103243`});
+        $(this).css({ "left": `${pos.left - ((swidth / (800 + (Math.random() * 800 / speed))) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px #103243` });
     });
 
-  }, 17);
+}, 17);
 
-  // Move Houses
-window.setInterval(function(){
+// Move Houses
+window.setInterval(function () {
     if (!document.hasFocus()) {
         return
     }
-    
+
     $('.house').each(function () {
         pos = $(this).position();
 
         if (pos.left + 200 <= 0) {
-            $(this).remove(); 
+            $(this).remove();
         }
 
-        $(this).css({"left": `${pos.left - (swidth/(200)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243`});
+        $(this).css({ "left": `${pos.left - (swidth / (200)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243` });
 
-        $(this).find(".housedoor").css({"box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 5px 10px #000000aa`})
-        $(this).find(".housemain").css({"box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 0px 30px #000000`})
+        $(this).find(".housedoor").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 5px 10px #000000aa` })
+        $(this).find(".housemain").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 0px 30px #000000` })
     });
-    }, 17);
+}, 17);
 
-    // Move Trees
-window.setInterval(function(){
+// Move Trees
+window.setInterval(function () {
     if (!document.hasFocus()) {
         return
     }
-    
+
 
     $('.treetrunk').each(function () {
         pos = $(this).position();
 
         if (pos.left + $(this).width() <= 0) {
-            $(this).remove(); 
+            $(this).remove();
         }
 
-        $(this).css({"left": `${pos.left - (swidth/(400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa`});
+        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
     });
 
     $('.leaf').each(function () {
         pos = $(this).position();
 
         if (pos.left + $(this).width() <= 0) {
-            $(this).remove(); 
+            $(this).remove();
         }
 
-        $(this).css({"left": `${pos.left - (swidth/(400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa`});
+        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
     });
-    }, 17);
+}, 17);
+
+// MOVING POWERUPS
+//Move Speed Powerup
+
+SPDirCnt = 0;
+SPDir = 1;
+
+
+window.setInterval(function () {
+
+    if (!document.hasFocus()) {
+        return
+    }
+
+    SPDirCnt += 0.07;
+
+    SPDir = Math.sin(SPDirCnt) * 8;
+
+
+    $('.power').each(function () {
+        
+        pos = $(this).position();
+
+        if (pos.left + $(this).width() <= 0) {
+            $(this).remove();
+        }
+
+        if (is_colliding($(this), $("#player")) || is_colliding($(this), $("#armL") || is_colliding($(this), $("#legL") || is_colliding($(this), $("#body") )))) {
+            
+
+            if ($(this).hasClass("speeditem")) {
+                if(lagSpd > 1) {
+                    lagSpd--;
+                    $("#speedval").html(30 - lagSpd + 1);
+                } else {
+                    lagSpd = 1; //I don't think this is needed but im very tired and I don't feel like thinking though it
+                }
+
+            } else if ($(this).hasClass("lifeitem")) {
+                lives++;
+                $("#lifeval").html(lives);
+            }
+
+            $(this.remove());
+        }
+
+        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "top": `${pos.top + SPDir}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
+    });
+
+}, 17);
 
 
 
-  window.setInterval(function() {
+
+
+// Speed changes
+
+window.setInterval(function () {
     if (document.hasFocus()) {
         //Speeds up the player
         speed += 0.01;
     }
-  }, 1000);
+}, 1000);
 
 
-    //Spawning and Scoring Logic
+//Spawning and Scoring Logic
 
-    setTimeout(move, 800 / speed)
+setTimeout(move, 800 / speed)
 
-    function move() {
-        if (!document.hasFocus()) {
-            setTimeout(move, 5000 / speed)
-            return
-        }
-        
-        //Increase Score
-        distance++;
-        $('#distval').html(distance);
-
-        //Generate Cloud
-        if (distance % 13 == 0 && $('.cloudpiece').length < 14) {
-            generateCloud(swidth);
-        }
-
-        //Generate House
-        if (distance % 2 == 1 && $(".house").length < 4) {
-            generateHouse(swidth);
-        }
-
-        //Generate Tree
-        if (distance % 2 == 0 && $(".treetrunk").length < 5) {
-            generateTree(swidth + 100);
-        }
-
-        setTimeout(move, 800 / speed)
+function move() {
+    if (!document.hasFocus()) {
+        setTimeout(move, 5000 / speed)
+        return
     }
 
-  $(document).ready(function () {
+    //Increase Score
+    distance++;
+    $('#distval').html(distance);
+
+    //Generate Cloud
+    if (distance % 13 == 0 && $('.cloudpiece').length < 14) {
+        generateCloud(swidth);
+    }
+
+    //Generate House
+    if (distance % 2 == 1 && $(".house").length < 4) {
+        generateHouse(swidth);
+    }
+
+    //Generate Tree
+    if (distance % 2 == 0 && $(".treetrunk").length < 5) {
+        generateTree(swidth + 100);
+    }
+
+    setTimeout(move, 800 / speed)
+}
+
+$(document).ready(function () {
     setup();
-    $(window).resize(function() {
+    $(window).resize(function () {
         setup();
     });
 });
@@ -130,12 +188,12 @@ window.setInterval(function(){
 
 // Player movement
 
-$(document).on('mousemove', function(e){
+$(document).on('mousemove', function (e) {
     curX = clamp(e.pageX - 55, 0, swidth);
     curY = clamp(e.pageY - 22, 0, sheight - 30);
 });
 
-window.setInterval(function(){
+window.setInterval(function () {
     if (!document.hasFocus()) {
         return
     }
@@ -156,27 +214,32 @@ window.setInterval(function(){
 
     // Move the Player
     $('#player').css(
-        {"top": `${playerY}px`,  // Vertical Position
-         "left": ` ${playerX}px`, // Horizontal position
-         "transform": `rotate(${clamp(rotation, -50, 50)}deg)`, // Rotation
+        {
+            "top": `${playerY}px`,  // Vertical Position
+            "left": ` ${playerX}px`, // Horizontal position
+            "transform": `rotate(${clamp(rotation, -50, 50)}deg)`, // Rotation
         });
-    
+
     // Make the eyes follow the cursor
-    $('#iris').css({"top": `${5 + (clamp(spdY, -2, 2))}px`, "left": `${5 + (clamp(spdX, -2, 2))}px`});
+    $('#iris').css({ "top": `${5 + (clamp(spdY, -2, 2))}px`, "left": `${5 + (clamp(spdX, -2, 2))}px` });
 
     // Use a box shadow to show where the player is (I spent way too much time on this considering it is purely cosmetic but it might be worth it idk it was pain but it looks cool now?????????????????????????????????????)
-    $("#armL, #armR, #legL, #legR, #body, #player").css({"box-shadow": `${diffX - spdX * 2}px ${diffY - trigIsUsefulNow(rotation, diffX)}px ${((Math.abs(spdX) + Math.abs(spdY))) + 5}px #ffffffa5`})
+    $("#armL, #armR, #legL, #legR, #body, #player").css({ "box-shadow": `${diffX - spdX * 2}px ${diffY - trigIsUsefulNow(rotation, diffX)}px ${((Math.abs(spdX) + Math.abs(spdY))) + 5}px #ffffffa5` })
 
-  }, 17);
+}, 17);
 
 // FUNCTIONS
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 function setup() {
-    if(window.innerHeight < sheight|| window.innerWidth < swidth) {
-        $("#reswarning").css({"opacity": 1});
+
+    spawnSpeedUp(500, 500)
+    spawnLifeUp(1000, 1000);
+
+    if (window.innerHeight < sheight || window.innerWidth < swidth) {
+        $("#reswarning").css({ "opacity": 1 });
     } else {
-        $("#reswarning").css({"opacity": 0});
+        $("#reswarning").css({ "opacity": 0 });
     }
 
     if (!init) {
@@ -226,11 +289,11 @@ function generateTree(x) {
 function generateLeaf(x, y) {
     x += (Math.random() * 20) - 40
     y += (Math.random() * 20) - 40
-    
+
     $("#treecontainer").append(`<div class="leaf" style="bottom: ${y}px; left: ${x}px"></div>`);
 }
 
-function randomHouseColor() {    
+function randomHouseColor() {
     s = (Math.random());
 
     r = (Math.floor(130 * s)).toString(16);
@@ -248,4 +311,42 @@ function randomHouseColor() {
 
 function trigIsUsefulNow(deg, adjacent) {
     return Math.tan(deg * Math.PI / 180) * adjacent;
+}
+
+// POWERS AND OBSTACLE FUNCTIONS
+
+powerFuncs = [spawnSpeedUp, spawnLifeUp]
+
+distPower = newPowerSpawnTime();
+
+
+function newPowerSpawnTime() {
+    return (Math.random() * 100) + 50
+}
+
+function SpawnRandomObstacle() {
+
+}
+
+function spawnRandomPower() {
+    powerFuncs[Math.floor(Math.random() * 2)](swidth, (Math.random() * sheight/2) + (sheight / 4))
+}
+
+function spawnSpeedUp(x, y) {
+    $("#obstaclecontainer").append(`<div class="speeditem power" style = "left: ${x}px; top: ${y}px">
+    <div class="speedVisA" style="top:6px">
+        <div class="speedVisAL"></div>
+        <div class="speedVisAR"></div>
+    </div>
+    <div class="speedVisA" style="top:20px">
+        <div class="speedVisAL"></div>
+        <div class="speedVisAR"></div>
+    </div>
+</div>`)
+}
+
+function spawnLifeUp(x, y) {
+    $("#obstaclecontainer").append(`<div class="lifeitem power" style = "left: ${x}px; top: ${y}px">
+    <div class="lifeVisPlus"> +</div>
+</div>`)
 }

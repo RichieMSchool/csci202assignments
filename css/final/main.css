@@ -12,11 +12,12 @@ body {
     position: relative;
 
     margin: 0 2%;
+    padding: 0 7px;
     font-size: 36px;
     font-weight: bold;
     z-index: 200;
 
-    background-color: yellow;
+    background-color: #ffff64;
 }
 
 #borderH {
@@ -115,6 +116,11 @@ body {
     z-index: 1;
 }
 
+
+#obstaclecontainer {
+    z-index: 80;
+}
+
 #bgoverlay {
     background-color: #97e7ff2b;
     position: absolute;
@@ -128,15 +134,33 @@ body {
 
 /* Score */
 
-#gamecontainer #distance {
+#distance, #speed, #lives {
     position: relative;
     top: 5%;
-    width: 100%;
-    text-align: center;
-    font-size: 5em;
-
+    text-align: left;
     z-index: 101;
+    width: fit-content;
+    border: 2px solid #000000;
+    padding: 10px;
 }
+
+#distance {
+    font-size: 30px;
+    background-color: lightskyblue;
+}
+
+#speed {
+    font-size: 25px;
+    background-color: #87fa9c;
+}
+
+#lives {
+    font-size: 25px;
+    background-color: #fa8787;
+}
+
+
+
 
 /* Player */
 
@@ -151,7 +175,6 @@ body {
     height: 50px;
     background-image: linear-gradient(white 1%, #000000 20%);
     border-radius: 80px;
-    color: #103243;
     z-index: 100;
 }
 
@@ -254,5 +277,67 @@ body {
     top: 16px;
     transform: rotate(2deg);
     animation-duration: 2.75s;
+}
+
+/* Obstacles */
+
+/* Powerups */
+
+/* Life Up */
+
+.lifeitem {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: radial-gradient(#00da00 40%, #007211 60%);
+    border-radius: 80px;
+    z-index: 150;
+
+    box-shadow: 0 0 20px #00ff00;
+}
+
+.lifeVisPlus {
+    position: absolute;
+    content: "+";
+
+    top: -9px;
+    left: 7px;
+
+    font-size: 60px;
+    font-weight: 900;
+}
+
+/* Speed */
+.speeditem {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: radial-gradient(orangered 60%, white 70%);
+    border-radius: 80px;
+    z-index: 150;
+}
+.speedVisA {
+    position: absolute;
+    left: 13px;
+}
+
+.speedVisAL, .speedVisAR {
+    position: absolute;
+
+    top: 0;
+    width: 24px;
+    height: 5px;
+    background-color: black;
+    border-radius: 80px;
+
+    z-index: 151;
+}
+
+.speedVisAL {
+    transform: rotate(55deg) translateX(10px);
+}
+
+.speedVisAR {
+    transform: rotate(-55deg) translateX(-10px);
 }
 

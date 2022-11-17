@@ -1,3 +1,5 @@
+performanceDroppingIntervals = [];
+
 sheight = 1080;
 swidth = 1920;
 init = false;
@@ -24,7 +26,7 @@ const cloudshadownight = "#000000";
 curcloudshadow = cloudshadowday;
 
 // Move Clouds
-window.setInterval(function () {
+cloudInterval = window.setInterval(function () {
     if (!document.hasFocus()) {
         return
     }
@@ -40,8 +42,9 @@ window.setInterval(function () {
 
 }, 17);
 
+
 // Move Houses
-window.setInterval(function () {
+houseInterval = window.setInterval(function () {
     if (!document.hasFocus()) {
         return
     }
@@ -61,7 +64,7 @@ window.setInterval(function () {
 }, 17);
 
 // Move Trees
-window.setInterval(function () {
+treeInterval = window.setInterval(function () {
     if (!document.hasFocus()) {
         return
     }
@@ -87,6 +90,12 @@ window.setInterval(function () {
         $(this).css({ "left": `${pos.left - (swidth / (400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
     });
 }, 17);
+
+
+// clearInterval(houseInterval);
+// clearInterval(cloudInterval);
+// clearInterval(treeInterval);
+
 
 //MOVING OBSTACLES
 
@@ -187,7 +196,7 @@ var speedInterval = window.setInterval(function () {
 
 setTimeout(move, 800 / speed)
 
-dayShift = 500;
+dayShift = 100;
 
 function move() {
     if (!document.hasFocus()) {
@@ -233,7 +242,7 @@ function move() {
             $("#distance").removeClass("night");
         }
 
-        dayShift += Math.floor(500 * speed);
+        dayShift += Math.floor(100 * speed);
     }
 
 

@@ -124,6 +124,41 @@ window.setInterval(function () {
 
 }, 17);
 
+//Moving Ships
+laserSize = 0;
+window.setInterval(function () {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.ship').each(function () {
+        pos = $(this).position();
+
+        if (pos.left >= swidth) {
+            $(this).remove();
+        }
+
+        $(this).css({ "left": `${pos.left + ((swidth/600) * speed)}px`});
+        
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+    });
+
+    laserSize += 0.02 * speed;
+
+    $('.laser').each(function () {
+        $(this).css({ "height": `${Math.sin(laserSize) * 1060 + 10}px`});
+
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+    })
+
+}, 17);
+
 
 //MOVING POWERUPS
 
@@ -277,6 +312,12 @@ function move() {
         distObstacle = distance + newObstacleSpawnTime();
     }
 
+    //Spawn Vertical Obstacle
+    if (distVObstacle <= distance) {
+        spawnRandomVObstacle();
+        distVObstacle = distance + newObstacleSpawnTime();
+    }
+
     setTimeout(move, 800 / speed)
 }
 
@@ -289,7 +330,6 @@ $(document).ready(function () {
 
 
 // Player movement
-
 $(document).on('mousemove', function (e) {
     curX = clamp(e.pageX - 55, 0, swidth);
     curY = clamp(e.pageY - 22, 0, sheight - 30);
@@ -435,7 +475,7 @@ function hurtPlayer() {
   if (lives == 0) {
     const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
 
-    $("#endscreen").html(`<h1>GAME OVER</h1><h2>Score:<span>${distance}</span></h2><h3><a href="./final.html">Click Here to Restart<a></h3>`)
+    $("#endscreen").html(`<h1>GAME OVER</h1><h2>Score: <span>${distance}</span></h2><h3><a href="./final.html">Click Here to Restart<a></h3>`)
 
     // Clear any timeout/interval up to that id
     for (let i = 1; i < interval_id; i++) {
@@ -449,8 +489,11 @@ function hurtPlayer() {
 
 powerFuncs = [spawnSpeedUp, spawnLifeUp]
 obstacleFuncs = [spawnWall]
+obstacleVFuncs = [spawnShip]
 
-distObstacle = newObstacleSpawnTime();
+
+distObstacle = 5;
+distVObstacle = 12;
 distPower = newPowerSpawnTime();
 
 function SpawnRandomObstacle() {
@@ -480,17 +523,26 @@ function spawnWall() {
     $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset}px; left: ${swidth}px;"></div>`);
 }
 
+function spawnRandomVObstacle() {
+    obstacleVFuncs[Math.floor(Math.random() * 1)]();
+}
+
+function spawnShip() {
+    $("#obstaclecontainer").append(`<div class="ship" style="top: 0; left: -165px;"><div class="laser"></div><div class="shipbody"></div></div>`)
+}
+
 function newObstacleSpawnTime() {
-    return Math.floor((Math.random() * 6) + 12);
+    return Math.floor((Math.random() * 18) + 12);
 }
 
 function newPowerSpawnTime() {
-    return Math.floor((Math.random() * 100) + 100);
+    return Math.floor((Math.random() * 100) + 50);
 }
 
 function spawnRandomPower() {
     if (lagSpd == 1) {
-        spawnLifeUp((Math.random() * sheight/2) + (sheight / 4));
+        spawnLifeUp(swidth, (Math.random() * sheight/2) + (sheight / 4));
+        return;
     }
 
     powerFuncs[Math.floor(Math.random() * 2)](swidth, (Math.random() * sheight/2) + (sheight / 4));

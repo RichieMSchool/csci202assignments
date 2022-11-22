@@ -13,7 +13,7 @@ playerY = 0;
 curX = 0;
 curY = 0;
 
-lagSpd = 30;
+lagSpd = 29;
 lives = 3;
 
 isDay = true;
@@ -159,6 +159,43 @@ window.setInterval(function () {
 
 }, 17);
 
+//Moving Fireworks
+
+window.setInterval(function () {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.firework').each(function () {
+
+
+        pos = $(this).position();
+
+        if (pos.top >= sheight) {
+            $(this).remove();
+        }
+
+        $(this).css({ "top": `${pos.top + ((sheight/300) * speed)}px`});
+        
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+    });
+
+    $('.fireworksil').each(function () {
+        pos = $(this).position();
+
+        if (pos.top <= -300) {
+            $(this).removeClass("fireworksil");
+            $(this).addClass("firework");
+        }
+
+        $(this).css({ "top": `${pos.top - ((sheight/400) * speed)}px`});
+    })
+
+}, 17);
+
 
 //MOVING POWERUPS
 
@@ -189,11 +226,12 @@ window.setInterval(function () {
             
 
             if ($(this).hasClass("speeditem")) {
-                if(lagSpd > 1) {
+                if(lagSpd > 5) {
                     lagSpd--;
                     $("#speedval").html(30 - lagSpd + 1);
                 } else {
-                    lagSpd = 1; //I don't think this is needed but im very tired and I don't feel like thinking though it
+                    lagSpd = 5; //I don't think this is needed but im very tired and I don't feel like thinking though it
+                    $("#speedval").html(30 - lagSpd + 1);
                 }
 
             } else if ($(this).hasClass("lifeitem")) {
@@ -312,10 +350,17 @@ function move() {
         distObstacle = distance + newObstacleSpawnTime();
     }
 
-    //Spawn Vertical Obstacle
-    if (distVObstacle <= distance) {
-        spawnRandomVObstacle();
-        distVObstacle = distance + newObstacleSpawnTime();
+    //Spawn Ship
+    if (distship <= distance) {
+        spawnShip();
+        distship = distance + newObstacleSpawnTime();
+    }
+
+    //Spawn Firework 
+
+    if (distFirework <= distance) {
+        spawnFirework();
+        distFirework = distance + newObstacleSpawnTime();
     }
 
     setTimeout(move, 800 / speed)
@@ -493,8 +538,9 @@ obstacleVFuncs = [spawnShip]
 
 
 distObstacle = 5;
-distVObstacle = 12;
-distPower = newPowerSpawnTime();
+distship = 12;
+distFirework = 3;
+distPower = 50;
 
 function SpawnRandomObstacle() {
     
@@ -523,8 +569,10 @@ function spawnWall() {
     $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset}px; left: ${swidth}px;"></div>`);
 }
 
-function spawnRandomVObstacle() {
-    obstacleVFuncs[Math.floor(Math.random() * 1)]();
+function spawnFirework() {
+    let classname = isDay ? "fireworksil" : "fireworksil night"
+
+    $("#obstaclecontainer").append(`<div class="${classname}" style = "top: ${sheight + 200}px; left: ${100 + ((Math.random() * (swidth - 100)))}px;"><div class="fireworktop"></div></div>`);
 }
 
 function spawnShip() {
@@ -532,7 +580,7 @@ function spawnShip() {
 }
 
 function newObstacleSpawnTime() {
-    return Math.floor((Math.random() * 18) + 12);
+    return Math.floor((Math.random() * 10) + 12);
 }
 
 function newPowerSpawnTime() {
@@ -540,7 +588,7 @@ function newPowerSpawnTime() {
 }
 
 function spawnRandomPower() {
-    if (lagSpd == 1) {
+    if (lagSpd == 5) {
         spawnLifeUp(swidth, (Math.random() * sheight/2) + (sheight / 4));
         return;
     }

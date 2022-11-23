@@ -26,6 +26,8 @@ body.night {
     font-weight: bold;
     z-index: 300;
 
+    pointer-events: none;
+
     background-color: #ffff64;
 }
 
@@ -209,6 +211,31 @@ body.night {
 
 #endscreen h2 span {
     text-shadow: 0px 0px 10px white;
+}
+
+/* FPS Buttons */
+
+#fpsbuttons {
+    position: absolute;
+    z-index: 300;
+}
+
+button {
+    width: 40px;
+    height: 40px;
+
+    background-color: white;
+    color: black;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
+
+button:target {
+    background-color: red;
+    color: white;
 }
 
 /* Score */

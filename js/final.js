@@ -1,3 +1,5 @@
+parseURL();
+
 performanceDroppingIntervals = [];
 
 sheight = 1080;
@@ -18,238 +20,22 @@ lives = 3;
 
 isDay = true;
 
-
-// MOVING BACKGROUNDS
+intervalTime = 17;
+spdMult = 1;
 
 const cloudshadowday = "#103243";
 const cloudshadownight = "#000000";
 curcloudshadow = cloudshadowday;
 
-// Move Clouds
-cloudInterval = window.setInterval(function () {
-    if (!document.hasFocus()) {
-        return
-    }
 
-    $('.cloudpiece').each(function () {
-        pos = $(this).position();
-
-        if (pos.left + $(this).width() <= 0) {
-            $(this).remove();
-        }
-        $(this).css({ "left": `${pos.left - ((swidth / (800 + (Math.random() * 800 / speed))) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px ${curcloudshadow}` });
-    });
-
-}, 17);
-
-
-// Move Houses
-houseInterval = window.setInterval(function () {
-    if (!document.hasFocus()) {
-        return
-    }
-
-    $('.house').each(function () {
-        pos = $(this).position();
-
-        if (pos.left + 200 <= 0) {
-            $(this).remove();
-        }
-
-        $(this).css({ "left": `${pos.left - (swidth / (200)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243` });
-
-        $(this).find(".housedoor").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 5px 10px #000000aa` })
-        $(this).find(".housemain").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 0px 30px #000000` })
-    });
-}, 17);
-
-// Move Trees
-treeInterval = window.setInterval(function () {
-    if (!document.hasFocus()) {
-        return
-    }
-
-
-    $('.treetrunk').each(function () {
-        pos = $(this).position();
-
-        if (pos.left + $(this).width() <= 0) {
-            $(this).remove();
-        }
-
-        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
-    });
-
-    $('.leaf').each(function () {
-        pos = $(this).position();
-
-        if (pos.left + $(this).width() <= 0) {
-            $(this).remove();
-        }
-
-        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
-    });
-}, 17);
-
-
-// clearInterval(houseInterval);
-// clearInterval(cloudInterval);
-// clearInterval(treeInterval);
-
-
-//MOVING OBSTACLES
-
-//Moving Walls
-
-window.setInterval(function () {
-    if (!document.hasFocus()) {
-        return
-    }
-
-    $('.wall').each(function () {
-        
-        pos = $(this).position();
-
-        if (pos.left + $(this).width() <= 0) {
-            $(this).remove();
-        }
-
-        if (is_colliding($(this), $("#player"))) {
-            this.remove();
-            hurtPlayer();
-        }
-
-        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
-    });
-
-}, 17);
-
-//Moving Ships
-laserSize = 0;
-window.setInterval(function () {
-    if (!document.hasFocus()) {
-        return
-    }
-
-    $('.ship').each(function () {
-        pos = $(this).position();
-
-        if (pos.left >= swidth) {
-            $(this).remove();
-        }
-
-        $(this).css({ "left": `${pos.left + ((swidth/600) * speed)}px`});
-        
-        if (is_colliding($(this), $("#player"))) {
-            this.remove();
-            hurtPlayer();
-        }
-    });
-
-    laserSize += 0.02 * speed;
-
-    $('.laser').each(function () {
-        $(this).css({ "height": `${Math.sin(laserSize) * 1060 + 10}px`});
-
-        if (is_colliding($(this), $("#player"))) {
-            this.remove();
-            hurtPlayer();
-        }
-    })
-
-}, 17);
-
-//Moving Fireworks
-
-window.setInterval(function () {
-    if (!document.hasFocus()) {
-        return
-    }
-
-    $('.firework').each(function () {
-
-
-        pos = $(this).position();
-
-        if (pos.top >= sheight) {
-            $(this).remove();
-        }
-
-        $(this).css({ "top": `${pos.top + ((sheight/300) * speed)}px`});
-        
-        if (is_colliding($(this), $("#player"))) {
-            this.remove();
-            hurtPlayer();
-        }
-    });
-
-    $('.fireworksil').each(function () {
-        pos = $(this).position();
-
-        if (pos.top <= -300) {
-            $(this).removeClass("fireworksil");
-            $(this).addClass("firework");
-        }
-
-        $(this).css({ "top": `${pos.top - ((sheight/400) * speed)}px`});
-    })
-
-}, 17);
-
-
-//MOVING POWERUPS
-
-SPDirCnt = 0;
-SPDir = 1;
-
-
-window.setInterval(function () {
-
-    if (!document.hasFocus()) {
-        return
-    }
-
-    SPDirCnt += 0.07;
-
-    SPDir = Math.sin(SPDirCnt) * 8;
-
-
-    $('.power').each(function () {
-        
-        pos = $(this).position();
-
-        if (pos.left + $(this).width() <= 0) {
-            $(this).remove();
-        }
-
-        if (is_colliding($(this), $("#player")) || is_colliding($(this), $("#armL") || is_colliding($(this), $("#legL") || is_colliding($(this), $("#body") )))) {
-            
-
-            if ($(this).hasClass("speeditem")) {
-                if(lagSpd > 5) {
-                    lagSpd--;
-                    $("#speedval").html(30 - lagSpd + 1);
-                } else {
-                    lagSpd = 5; //I don't think this is needed but im very tired and I don't feel like thinking though it
-                    $("#speedval").html(30 - lagSpd + 1);
-                }
-
-            } else if ($(this).hasClass("lifeitem")) {
-                lives++;
-                $("#lifeval").html(lives);
-            }
-
-            $(this.remove());
-        }
-
-        $(this).css({ "left": `${pos.left - ((swidth/600) * speed)}px`, "top": `${pos.top + SPDir}px`});
-    });
-
-}, 17);
-
-
-
-
+createTimeIntervals();
+
+// Remember player's FPS preference
+if (window.location.href.split("#")[1] != undefined) {
+    changeFPS(window.location.href.split("#")[1]);
+} else {
+    changeFPS("60fps");
+}
 
 // Speed changes
 
@@ -374,13 +160,92 @@ $(document).ready(function () {
 });
 
 
-// Player movement
+// Track Cursor
 $(document).on('mousemove', function (e) {
     curX = clamp(e.pageX - 55, 0, swidth);
     curY = clamp(e.pageY - 22, 0, sheight - 30);
 });
 
-window.setInterval(function () {
+// FUNCTIONS
+function parseURL(){
+    let param = window.location.href.split('?fps=')[1];
+    if (param == undefined) {
+        return;
+    }
+    url = window.location.href.split('html');
+    window.location.href = url[0] + 'html#' + param;
+
+}
+
+function changeFPS(option) {
+    clearTimeIntervals();
+
+    let url = window.location.href.split('html');
+
+    switch(option) {
+        case "15fps":
+            intervalTime = 67;
+            spdMult = 4;
+            window.location.href = url[0] + 'html' + "#15fps";
+            break;
+        case "30fps":
+            intervalTime = 34;
+            spdMult = 2;
+            window.location.href = url[0] + 'html' + "#30fps";
+            break;
+        case "60fps":
+            intervalTime = 17;
+            spdMult = 1;
+            window.location.href = url[0] + 'html' + "#60fps";
+            break;
+        default:
+            // Pause
+            intervalTime = 0;
+            window.location.href = url[0] + 'html' + "#pause";
+    }
+
+    createTimeIntervals();
+}
+
+function createTimeIntervals() {
+
+    if (intervalTime == 0) {
+        //pause
+        return;
+    }
+
+    playerInterval = window.setInterval(movePlayer, intervalTime);
+    
+    cloudInterval = window.setInterval(moveClouds, intervalTime);
+    houseInterval = window.setInterval(moveHouses, intervalTime);
+    treeInterval = window.setInterval(moveTrees, intervalTime);
+
+    wallInterval = window.setInterval(moveWalls, intervalTime);
+    shipInterval = window.setInterval(moveShips, intervalTime);
+    fireworkInterval = window.setInterval(moveFireworks, intervalTime);
+
+    powerupInterval = window.setInterval(movePowerups, intervalTime);
+}
+
+function clearTimeIntervals() {
+    clearInterval(playerInterval);
+
+    clearInterval(cloudInterval);
+    clearInterval(houseInterval);
+    clearInterval(treeInterval);
+
+    clearInterval(wallInterval);
+    clearInterval(shipInterval);
+    clearInterval(fireworkInterval);
+
+    clearInterval(powerupInterval);
+}
+
+// Moving functions
+
+// Moving player
+
+function movePlayer() {
     if (!document.hasFocus()) {
         return
     }
@@ -394,8 +259,8 @@ window.setInterval(function () {
     spdY = (diffY / lagSpd);
 
     // Get the new player Position
-    playerX += clamp(diffX, -spdX, spdX);
-    playerY += clamp(diffY, -spdY, spdY);
+    playerX += clamp(diffX, -spdX, spdX) * spdMult;
+    playerY += clamp(diffY, -spdY, spdY) * spdMult;
 
     rotation = (spdX / 1.5) + (spdY / 1.5);
 
@@ -413,9 +278,210 @@ window.setInterval(function () {
     // Use a box shadow to show where the player is (I spent way too much time on this considering it is purely cosmetic but it might be worth it idk it was pain but it looks cool now?????????????????????????????????????)
     $("#armL, #armR, #legL, #legR, #body, #player").css({ "box-shadow": `${diffX - spdX * 2}px ${diffY - findTanOpposite(rotation, diffX)}px ${((Math.abs(spdX) + Math.abs(spdY))) + 5}px #ffffffa5` })
 
-}, 17);
+}
 
-// FUNCTIONS
+
+// Moving background
+
+function moveClouds() {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.cloudpiece').each(function () {
+        pos = $(this).position();
+
+        if (pos.left + $(this).width() <= 0) {
+            $(this).remove();
+        }
+        $(this).css({ "left": `${pos.left - ((swidth / (800 + (Math.random() * 800 / speed))) * speed * spdMult)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px ${curcloudshadow}` });
+    });
+}
+
+function moveHouses() {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.house').each(function () {
+        pos = $(this).position();
+
+        if (pos.left + 200 <= 0) {
+            $(this).remove();
+        }
+
+        $(this).css({ "left": `${pos.left - (swidth / (200)) * speed * spdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243` });
+
+        $(this).find(".housedoor").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 5px 10px #000000aa` })
+        $(this).find(".housemain").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 0px 30px #000000` })
+    });
+}
+
+function moveTrees() {
+    if (!document.hasFocus()) {
+        return
+    }
+
+
+    $('.treetrunk').each(function () {
+        pos = $(this).position();
+
+        if (pos.left + $(this).width() <= 0) {
+            $(this).remove();
+        }
+
+        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed * spdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
+    });
+
+    $('.leaf').each(function () {
+        pos = $(this).position();
+
+        if (pos.left + $(this).width() <= 0) {
+            $(this).remove();
+        }
+
+        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed * spdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
+    });
+}
+
+// Moving Obstacles
+
+function moveWalls() {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.wall').each(function () {
+        
+        pos = $(this).position();
+
+        if (pos.left + $(this).width() <= 0) {
+            $(this).remove();
+        }
+
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+
+        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
+    });
+}
+
+function moveFireworks() {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.firework').each(function () {
+
+
+        pos = $(this).position();
+
+        if (pos.top >= sheight) {
+            $(this).remove();
+        }
+
+        $(this).css({ "top": `${pos.top + ((sheight/300) * speed)}px`});
+        
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+    });
+
+    $('.fireworksil').each(function () {
+        pos = $(this).position();
+
+        if (pos.top <= -300) {
+            $(this).removeClass("fireworksil");
+            $(this).addClass("firework");
+        }
+
+        $(this).css({ "top": `${pos.top - ((sheight/400) * speed)}px`});
+    })
+}
+
+
+laserSize = 0;
+function moveShips() {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    $('.ship').each(function () {
+        pos = $(this).position();
+
+        if (pos.left >= swidth) {
+            $(this).remove();
+        }
+
+        $(this).css({ "left": `${pos.left + ((swidth/600) * speed)}px`});
+        
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+    });
+
+    laserSize += 0.02 * speed;
+
+    $('.laser').each(function () {
+        $(this).css({ "height": `${Math.sin(laserSize) * 1060 + 10}px`});
+
+        if (is_colliding($(this), $("#player"))) {
+            this.remove();
+            hurtPlayer();
+        }
+    })
+}
+
+// Moving powerups
+SPDirCnt = 0;
+SPDir = 1;
+
+function movePowerups() {
+    if (!document.hasFocus()) {
+        return
+    }
+
+    SPDirCnt += 0.07;
+
+    SPDir = Math.sin(SPDirCnt) * 8;
+
+
+    $('.power').each(function () {
+        
+        pos = $(this).position();
+
+        if (pos.left + $(this).width() <= 0) {
+            $(this).remove();
+        }
+
+        if (is_colliding($(this), $("#player"))) {
+            
+
+            if ($(this).hasClass("speeditem")) {
+                if(lagSpd > 5) {
+                    lagSpd--;
+                    $("#speedval").html(30 - lagSpd + 1);
+                } else {
+                    lagSpd = 5; //I don't think this is needed but im very tired and I don't feel like thinking though it
+                    $("#speedval").html(30 - lagSpd + 1);
+                }
+
+            } else if ($(this).hasClass("lifeitem")) {
+                lives++;
+                $("#lifeval").html(lives);
+            }
+
+            $(this.remove());
+        }
+
+        $(this).css({ "left": `${pos.left - ((swidth/600) * speed)}px`, "top": `${pos.top + SPDir}px`});
+    });
+}
+
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 function setup() {
@@ -520,7 +586,8 @@ function hurtPlayer() {
   if (lives == 0) {
     const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
 
-    $("#endscreen").html(`<h1>GAME OVER</h1><h2>Score: <span>${distance}</span></h2><h3><a href="./final.html">Click Here to Restart<a></h3>`)
+    
+    $("#endscreen").html(`<h1>GAME OVER</h1><h2>Score: <span>${distance}</span></h2><h3><a href="./final.html?fps=${window.location.href.split('#')[1]}">Click Here to Restart<a></h3>`)
 
     // Clear any timeout/interval up to that id
     for (let i = 1; i < interval_id; i++) {

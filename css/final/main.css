@@ -53,6 +53,31 @@ body.night {
     z-index: 200;
 }
 
+#betweencol {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    background-color: black;
+    opacity: 0;
+
+    width: 1px;
+    height: 100px;
+
+    transform-origin: top center;
+
+    z-index: 600;
+}
+
+#prevpos {
+    position: absolute;
+    z-index: 600;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+}
+
 /* BG Stuff */
 
 .cloudpiece {

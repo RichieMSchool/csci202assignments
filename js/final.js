@@ -31,10 +31,13 @@ curcloudshadow = cloudshadowday;
 createTimeIntervals();
 
 // Remember player's FPS preference
-if (window.location.href.split("#")[1] != undefined) {
+
+if (window.location.href.split("#")[1] !== undefined) {
     changeFPS(window.location.href.split("#")[1]);
 } else {
-    changeFPS("60fps");
+    if(window.location.href.split('?fps=')[1] === undefined) { // The only reason this if statement exists is because of a race condition where this code runs before the URL can be changed
+        changeFPS("60fps");
+    }
 }
 
 // Speed changes
@@ -167,12 +170,28 @@ $(document).on('mousemove', function (e) {
 });
 
 // FUNCTIONS
+
+// Debug Functions
+
+function showCollider() {
+    $("#betweencol").css({"opacity": 1})
+    $("#prevpos").css({"opacity": 1})
+}
+
+function hideCollider() {
+    $("#betweencol").css({"opacity": 0})
+    $("#prevpos").css({"opacity": 0})
+}
+
+
 function parseURL(){
     let param = window.location.href.split('?fps=')[1];
-    if (param == undefined) {
+    if (param === undefined) {
         return;
     }
+
     url = window.location.href.split('html');
+
     window.location.href = url[0] + 'html#' + param;
 
 }
@@ -244,11 +263,13 @@ function clearTimeIntervals() {
 // Moving functions
 
 // Moving player
-
 function movePlayer() {
     if (!document.hasFocus()) {
         return
     }
+    
+    let prevX = playerX + 25;
+    let prevY = playerY + 25;
 
     // Get difference beteween the character's position and the mouse
     diffX = curX - playerX;
@@ -271,6 +292,24 @@ function movePlayer() {
             "left": ` ${playerX}px`, // Horizontal position
             "transform": `rotate(${clamp(rotation, -50, 50)}deg)`, // Rotation
         });
+
+    // Adjust the collision detector
+    
+    $("#betweencol").css(
+        {
+            "top": `${prevY}px`,  // Vertical Position
+            "left": ` ${[prevX]}px`, // Horizontal position
+            "transform": `rotate(${(Math.atan2(prevX - (playerX + 25), (playerY + 25) - prevY))}rad)`, // Points to player
+            "height": `${getVectorMagnitude(playerX + 25, prevX, prevY, playerY + 25)}px`
+            
+        });
+
+    $("#prevpos").css(
+        {
+            "top": `${prevY - 10}px`,  // Vertical Position
+            "left": ` ${[prevX - 10 ]}px`, // Horizontal position
+        }
+    );
 
     // Make the eyes follow the cursor
     $('#iris').css({ "top": `${5 + (clamp(spdY, -2, 2))}px`, "left": `${5 + (clamp(spdX, -2, 2))}px` });
@@ -359,12 +398,12 @@ function moveWalls() {
             $(this).remove();
         }
 
-        if (is_colliding($(this), $("#player"))) {
+        if (is_colliding($(this), $("#betweencol"))) {
             this.remove();
             hurtPlayer();
         }
 
-        $(this).css({ "left": `${pos.left - ((swidth/400) * speed)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
+        $(this).css({ "left": `${pos.left - ((swidth/400) * speed * spdMult)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
     });
 }
 
@@ -382,9 +421,9 @@ function moveFireworks() {
             $(this).remove();
         }
 
-        $(this).css({ "top": `${pos.top + ((sheight/300) * speed)}px`});
+        $(this).css({ "top": `${pos.top + ((sheight/300) * speed * spdMult)}px`});
         
-        if (is_colliding($(this), $("#player"))) {
+        if (is_colliding($(this), $("#betweencol"))) {
             this.remove();
             hurtPlayer();
         }
@@ -398,7 +437,7 @@ function moveFireworks() {
             $(this).addClass("firework");
         }
 
-        $(this).css({ "top": `${pos.top - ((sheight/400) * speed)}px`});
+        $(this).css({ "top": `${pos.top - ((sheight/400) * speed * spdMult)}px`});
     })
 }
 
@@ -416,20 +455,20 @@ function moveShips() {
             $(this).remove();
         }
 
-        $(this).css({ "left": `${pos.left + ((swidth/600) * speed)}px`});
+        $(this).css({ "left": `${pos.left + ((swidth/600) * speed * spdMult)}px`});
         
-        if (is_colliding($(this), $("#player"))) {
+        if (is_colliding($(this), $("#betweencol"))) {
             this.remove();
             hurtPlayer();
         }
     });
 
-    laserSize += 0.02 * speed;
+    laserSize += 0.02 * speed * spdMult;
 
     $('.laser').each(function () {
         $(this).css({ "height": `${Math.sin(laserSize) * 1060 + 10}px`});
 
-        if (is_colliding($(this), $("#player"))) {
+        if (is_colliding($(this), $("#betweencol"))) {
             this.remove();
             hurtPlayer();
         }
@@ -445,7 +484,7 @@ function movePowerups() {
         return
     }
 
-    SPDirCnt += 0.07;
+    SPDirCnt += 0.07 * spdMult;
 
     SPDir = Math.sin(SPDirCnt) * 8;
 
@@ -458,7 +497,7 @@ function movePowerups() {
             $(this).remove();
         }
 
-        if (is_colliding($(this), $("#player"))) {
+        if (is_colliding($(this), $("#betweencol"))) {
             
 
             if ($(this).hasClass("speeditem")) {
@@ -478,7 +517,7 @@ function movePowerups() {
             $(this.remove());
         }
 
-        $(this).css({ "left": `${pos.left - ((swidth/600) * speed)}px`, "top": `${pos.top + SPDir}px`});
+        $(this).css({ "left": `${pos.left - ((swidth/600) * speed * spdMult)}px`, "top": `${pos.top + SPDir}px`});
     });
 }
 
@@ -568,6 +607,15 @@ function randomHouseColor() {
 
 function findTanOpposite(deg, adjacent) {
     return Math.tan(deg * Math.PI / 180) * adjacent;
+}
+
+function getVectorMagnitude(x1, x2, y1, y2) {
+    // Just the Distance formula
+    return Math.sqrt(square(x2 - x1) + square(y2 - y1));
+}
+
+function square(x) {
+    return x * x;
 }
 
 function hurtPlayer() {

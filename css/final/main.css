@@ -246,9 +246,11 @@ body.night {
 }
 
 button {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
     background-color: white;
     color: black;
 }
@@ -546,7 +548,7 @@ button:target {
     box-shadow: 0 0 40px #02fd02;
 }
 
-.lifeVisPlus {
+.lifeVisPlus{
 
     font-family: 'Times New Roman', Times, serif;
     position: absolute;

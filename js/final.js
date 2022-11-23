@@ -213,14 +213,11 @@ function changeFPS(option) {
             window.location.href = url[0] + 'html' + "#30fps";
             break;
         case "60fps":
+             default:
             intervalTime = 17;
             spdMult = 1;
             window.location.href = url[0] + 'html' + "#60fps";
             break;
-        default:
-            // Pause
-            intervalTime = 0;
-            window.location.href = url[0] + 'html' + "#pause";
     }
 
     createTimeIntervals();

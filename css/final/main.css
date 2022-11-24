@@ -601,7 +601,7 @@ button:target {
     }
     100% {
         background-color: white;
-        box-shadow: 1850px 0px 10px yellow;
+        box-shadow: 1850px 0px 10px red;
     }
 }
 @keyframes laserLLeave {
@@ -621,7 +621,7 @@ button:target {
     }
     100% {
         background-color: white;
-        box-shadow: -1850px 0px 50px yellow;
+        box-shadow: -1850px 0px 50px red;
     }
 }
 

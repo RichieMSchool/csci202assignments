@@ -748,14 +748,12 @@ function spawnLaser() {
             $("#obstaclecontainer").append($laser)
             setTimeout(function () {
                 $laser.remove();
-                // $left.remove();
-                // $right.remove();
                 $right.css({ "animation-name": "laserRLeave" })
                 $left.css({ "animation-name": "laserLLeave" }).on("animationend", function () {
                     $left.remove();
                     $right.remove();
                 });
-            }, 3500 / speed);
+            }, 3000 / speed);
         }
     });
 

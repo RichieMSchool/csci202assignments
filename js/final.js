@@ -1,7 +1,5 @@
 parseURL();
 
-performanceDroppingIntervals = [];
-
 sheight = 1080;
 swidth = 1920;
 init = false;
@@ -133,7 +131,7 @@ function move() {
         distPower = distance + newPowerSpawnTime();
     }
 
-    //Spawn Obstacle
+    //Spawn Horizontal Obstacle
     if (distObstacle <= distance) {
         SpawnRandomObstacle();
         distObstacle = distance + newObstacleSpawnTime();
@@ -208,7 +206,7 @@ function changeFPS(option) {
             window.location.href = url[0] + 'html' + "#15fps";
             break;
         case "30fps":
-            intervalTime = 34;
+            intervalTime = 33;
             spdMult = 2;
             window.location.href = url[0] + 'html' + "#30fps";
             break;
@@ -240,6 +238,8 @@ function createTimeIntervals() {
     shipInterval = window.setInterval(moveShips, intervalTime);
     fireworkInterval = window.setInterval(moveFireworks, intervalTime);
 
+    laserColInterval = window.setInterval(checkLaserCollision, intervalTime);
+
     powerupInterval = window.setInterval(movePowerups, intervalTime);
 }
 
@@ -253,6 +253,8 @@ function clearTimeIntervals() {
     clearInterval(wallInterval);
     clearInterval(shipInterval);
     clearInterval(fireworkInterval);
+
+    clearInterval(laserColInterval);
 
     clearInterval(powerupInterval);
 }
@@ -400,7 +402,7 @@ function moveWalls() {
             hurtPlayer();
         }
 
-        $(this).css({ "left": `${pos.left - ((swidth/400) * speed * spdMult)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
+        $(this).css({ "left": `${pos.left - ((swidth/500) * speed * spdMult)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 20}px 5px 5px black` });
     });
 }
 
@@ -452,7 +454,7 @@ function moveShips() {
             $(this).remove();
         }
 
-        $(this).css({ "left": `${pos.left + ((swidth/600) * speed * spdMult)}px`});
+        $(this).css({ "left": `${pos.left + ((swidth/1200) * speed * spdMult)}px`});
         
         if (is_colliding($(this), $("#betweencol"))) {
             this.remove();
@@ -465,6 +467,16 @@ function moveShips() {
     $('.laser').each(function () {
         $(this).css({ "height": `${Math.sin(laserSize) * 1060 + 10}px`});
 
+        if (is_colliding($(this), $("#betweencol"))) {
+            this.remove();
+            hurtPlayer();
+        }
+    })
+}
+
+// not acutally moving but this checks collisions
+function checkLaserCollision() {
+    $('.horizontalLaser').each(function () {
         if (is_colliding($(this), $("#betweencol"))) {
             this.remove();
             hurtPlayer();
@@ -494,7 +506,7 @@ function movePowerups() {
             $(this).remove();
         }
 
-        if (is_colliding($(this), $("#betweencol"))) {
+        if (is_colliding($(this), $("#betweencol")) || is_colliding($(this), $("#player"))) {
             
 
             if ($(this).hasClass("speeditem")) {
@@ -645,8 +657,7 @@ function hurtPlayer() {
 // POWERS AND OBSTACLE FUNCTIONS
 
 powerFuncs = [spawnSpeedUp, spawnLifeUp]
-obstacleFuncs = [spawnWall]
-obstacleVFuncs = [spawnShip]
+obstacleFuncs = [spawnWall, spawnLasers]
 
 
 distObstacle = 5;
@@ -656,7 +667,7 @@ distPower = 50;
 
 function SpawnRandomObstacle() {
     
-    obstacleFuncs[Math.floor(Math.random() * 1)]();
+    obstacleFuncs[Math.floor(Math.random() * 2)]();
 }
 
 function spawnWall() {
@@ -679,6 +690,64 @@ function spawnWall() {
     }
 
     $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset}px; left: ${swidth}px;"></div>`);
+}
+
+const yourFunction = async () => {
+    await setTimeout(5000);
+    console.log("Waited 5s");
+  
+    await setTimeout(5000);
+    console.log("Waited an additional 5s");
+  };
+
+function spawnLasers () {
+    let amount = Math.floor(Math.random() * 5) + 1
+
+    for (let i = 0; i < amount; i++) {
+        setTimeout(spawnLaser, Math.random() * 2000)
+    }
+}
+
+function spawnLaser() {
+    let h = Math.random() * (sheight - 60);
+
+    // This is a nightmare
+    let l = document.createElement("div")
+    let $left = $(l).addClass("laserBase").css({
+        "animation-name": "laserLShow",
+        "top": `${h}px`,
+        "animation-duration": `${6.5 / speed}s`
+    })
+
+    let las = document.createElement("div");
+    let $laser = $(las).addClass("horizontalLaser").css({
+        "top": `${h + 38}px`
+    })
+
+    let r = document.createElement("div")
+
+    //The right side's animation triggers the laser (no particular reason for choosing the right side)
+    let $right = $(r).addClass("laserBase").css({
+        "animation-name": "laserRShow",
+        "left": "1860px",
+        "top": `${h}px`,
+        "animation-duration": `${6.5 / speed}s`
+    }).on("animationend", function () {
+        $("#obstaclecontainer").append($laser)
+        setTimeout(function () {
+            $laser.remove();
+            // $left.remove();
+            // $right.remove();
+            $right.css({"animation-name": "laserRLeave"})
+            $left.css({"animation-name": "laserLLeave"}).on("animationend", function () {
+            $left.remove();
+            $right.remove();
+            });
+        }, 3500 / speed);
+    });
+
+    $("#obstaclecontainer").append($left)
+    $("#obstaclecontainer").append($right)
 }
 
 function spawnFirework() {

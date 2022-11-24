@@ -429,7 +429,7 @@ button:target {
 /* Wall */
 .wall {
     position: absolute;
-    width: 50px;
+    width: 100px;
     height: 700px;
     border: 3px solid #000000;
     top: -10px;
@@ -466,8 +466,8 @@ button:target {
     position: absolute;
     background-image: linear-gradient(to left, #ff0000 25%,#4f0000 50%, #ff0000 75%);
     box-shadow: 0px 0px 30px red;
-    width: 30px;
-    left: 40px;
+    width: 50px;
+    left: 25px;
     top: 100px;
     transform-origin: top;
 }
@@ -532,6 +532,90 @@ button:target {
 .fireworksil.night .fireworktop {
     border-color: transparent transparent #979797 transparent;
 }
+
+/* Lasers */
+.laserBase {
+    position: absolute;
+
+    top: 50%;
+
+    width: 50px;
+    height: 90px;
+
+    background-color: red;
+    border: 4px solid black;
+
+    z-index: 155;
+
+    animation-timing-function: ease-in-out;
+    
+}
+
+
+
+.laserLeaveL {
+    animation-name: laserLLeave;
+
+}
+
+.laserLeaveR {
+    animation-name: laserRLeave;
+}
+
+.horizontalLaser {
+    position: absolute;
+    background-image: linear-gradient(to bottom, #ff0000 35%,#ffffff 50%, #ff0000 65%);
+    box-shadow: 0px 0px 30px #ff0000;
+    width: 1910px;
+    left: 5px;
+    top: 1000px;
+
+    height: 20px;
+    transform-origin: top;
+
+    z-index: 150;
+}
+
+@keyframes laserLShow {
+    0% {
+        left: -60px;
+        background-color: black;
+    }
+    70% {
+        left: 10px;
+        background-color: red;
+        box-shadow: 0px 0px 0px red;
+    }
+    100% {
+        background-color: white;
+        box-shadow: 0px 0px 50px red;
+    }
+}
+@keyframes laserLLeave {
+    0% {left: 10px;}
+    100% {left: -60px;}
+}
+
+@keyframes laserRShow {
+    0% {
+        left: 1930px;
+        background-color: black;
+    }
+    70% {
+        left: 1860px;
+        background-color: red;
+    }
+    100% {
+        background-color: white;
+    }
+}
+
+@keyframes laserRLeave {
+    0% {left: 1860px;}
+    100% {left: 1930px;}
+}
+
+
 
 /* Powerups */
 

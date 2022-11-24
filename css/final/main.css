@@ -576,6 +576,21 @@ button:target {
     z-index: 150;
 }
 
+.horizontalLaserPrev {
+    position: absolute;
+    width: 100%;
+    height: 150px;
+
+    left: 0;
+    top: 50%;
+
+    z-index: 90;
+
+    /* background-color: yellow; */
+
+    background-image: linear-gradient(to bottom, transparent 30%, #ffff0073 50%, transparent 70% );
+}
+
 @keyframes laserLShow {
     0% {
         left: -60px;

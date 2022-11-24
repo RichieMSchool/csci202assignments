@@ -712,6 +712,13 @@ function spawnLaser() {
     let spawned = false;
     let h = Math.random() * (sheight - 60);
 
+    let p = document.createElement("div");
+    let $pvw = $(p).addClass("horizontalLaserPrev").css({
+        "top": `${h - 25}px`
+    })
+
+    $("#obstaclecontainer").append($pvw);
+
     // This is a nightmare
     let l = document.createElement("div")
     let $left = $(l).addClass("laserBase").css({
@@ -737,6 +744,7 @@ function spawnLaser() {
         if (!spawned) {
             spawned = true;
 
+            $pvw.remove();
             $("#obstaclecontainer").append($laser)
             setTimeout(function () {
                 $laser.remove();

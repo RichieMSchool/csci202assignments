@@ -586,10 +586,7 @@ button:target {
     top: 50%;
 
     z-index: 90;
-
-    /* background-color: yellow; */
-
-    background-image: linear-gradient(to bottom, transparent 30%, #ffff0073 50%, transparent 70% );
+    background-image: linear-gradient(to bottom, transparent 30%, #ffff0067 50%, transparent 70% );
 }
 
 @keyframes laserLShow {

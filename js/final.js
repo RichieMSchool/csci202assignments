@@ -38,6 +38,15 @@ if (window.location.href.split("#")[1] !== undefined) {
     }
 }
 
+
+window.onblur = function () {
+    $(".laserBase").css({"animation-play-state": "paused"});
+}
+
+window.onfocus = function () {
+    $(".laserBase").css({"animation-play-state": "running"});
+}
+
 // Speed changes
 
 var speedInterval = window.setInterval(function () {

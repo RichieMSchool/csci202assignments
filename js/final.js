@@ -709,6 +709,7 @@ function spawnLasers () {
 }
 
 function spawnLaser() {
+    let spawned = false;
     let h = Math.random() * (sheight - 60);
 
     // This is a nightmare
@@ -733,17 +734,21 @@ function spawnLaser() {
         "top": `${h}px`,
         "animation-duration": `${6.5 / speed}s`
     }).on("animationend", function () {
-        $("#obstaclecontainer").append($laser)
-        setTimeout(function () {
-            $laser.remove();
-            // $left.remove();
-            // $right.remove();
-            $right.css({"animation-name": "laserRLeave"})
-            $left.css({"animation-name": "laserLLeave"}).on("animationend", function () {
-            $left.remove();
-            $right.remove();
-            });
-        }, 3500 / speed);
+        if (!spawned) {
+            spawned = true;
+
+            $("#obstaclecontainer").append($laser)
+            setTimeout(function () {
+                $laser.remove();
+                // $left.remove();
+                // $right.remove();
+                $right.css({ "animation-name": "laserRLeave" })
+                $left.css({ "animation-name": "laserLLeave" }).on("animationend", function () {
+                    $left.remove();
+                    $right.remove();
+                });
+            }, 3500 / speed);
+        }
     });
 
     $("#obstaclecontainer").append($left)

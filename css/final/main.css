@@ -567,7 +567,7 @@ button:target {
     background-image: linear-gradient(to bottom, #ff0000 35%,#ffffff 50%, #ff0000 65%);
     box-shadow: 0px 0px 30px #ff0000;
     width: 1910px;
-    left: 5px;
+    left: 8px;
     top: 1000px;
 
     height: 20px;

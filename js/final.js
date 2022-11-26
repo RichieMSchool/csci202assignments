@@ -25,6 +25,8 @@ const cloudshadowday = "#103243";
 const cloudshadownight = "#000000";
 curcloudshadow = cloudshadowday;
 
+laserTimeouts = new Set();
+
 
 createTimeIntervals();
 
@@ -138,6 +140,11 @@ function move() {
     if (distPower <= distance) {
         spawnRandomPower();
         distPower = distance + newPowerSpawnTime();
+    }
+
+    //Spawn ClearAll
+    if (Math.random() < 0.002) {
+        spawnClearAll(swidth, (Math.random() * sheight/2) + (sheight / 4));
     }
 
     //Spawn Horizontal Obstacle
@@ -535,6 +542,13 @@ function movePowerups() {
                 lives++;
                 $("#lifeval").html(lives);
                 triggerEffectAnim('heal');
+            } else if ($(this).hasClass("removeall")) {
+                triggerEffectAnim("clearAll")
+                // "Skips" next obstacle
+                distObstacle += newObstacleSpawnTime();
+                distship += newObstacleSpawnTime();
+                distFirework += newObstacleSpawnTime();
+                $("#obstaclecontainer").empty();
             }
 
             $(this.remove());
@@ -703,20 +717,32 @@ function spawnWall() {
     $("#obstaclecontainer").append(`<div class="wall" style = "top: ${offset}px; left: ${swidth}px;"></div>`);
 }
 
-const yourFunction = async () => {
-    await setTimeout(5000);
-    console.log("Waited 5s");
-  
-    await setTimeout(5000);
-    console.log("Waited an additional 5s");
-  };
-
 function spawnLasers () {
-    let amount = Math.floor(Math.random() * 5) + 1
+    let amount = Math.floor(Math.random() * 6) + 3
+    let waitTime = (2000 / amount) / speed;
+    let timeoutIDS = [];
 
+    let cur = 0;
     for (let i = 0; i < amount; i++) {
-        setTimeout(spawnLaser, Math.random() * 2000)
+        cur += Math.random() * waitTime;
+        let curID = setTimeout(spawnLaser, cur);
+        laserTimeouts.add(curID);
+        timeoutIDS.push(curID);
     }
+    setTimeout(removeLaserTimeoutIDs, cur + 500, timeoutIDS); // workaround to remove non active laser timeouts
+}
+
+function removeLaserTimeoutIDs(timeoutIDS) {
+        timeoutIDS.forEach(function (e) {
+            laserTimeouts.delete(e);
+        })
+}
+
+function clearLaserTimeouts() {
+    laserTimeouts.forEach(function (e) {
+        clearTimeout(e);
+        laserTimeouts.delete(e);
+    })
 }
 
 function spawnLaser() {
@@ -816,6 +842,10 @@ function spawnLifeUp(x, y) {
     $("#obstaclecontainer").append(`<div class="lifeitem power" style = "left: ${x}px; top: ${y}px">
     <div class="lifeVisPlus"> +</div>
 </div>`);
+}
+
+function spawnClearAll(x, y) {
+    $("#obstaclecontainer").append(`<div class="removeall power" style = "left: ${x}px; top: ${y}px"></div>`)
 }
 
 function triggerEffectAnim(classname) {

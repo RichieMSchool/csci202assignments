@@ -347,6 +347,18 @@ button:target {
     animation-iteration-count: infinite;
 }
 
+#poweruphitbox {
+    position: absolute;
+    
+    border: 5px solid transparent;
+    height: 50px;
+    width: 200px;
+
+    left: -130px;
+    top: -5px;
+
+}
+
 @keyframes flyAL {
     0% {transform: rotate(5deg);}
     50% {transform: rotate(-5deg) translate(8px);}

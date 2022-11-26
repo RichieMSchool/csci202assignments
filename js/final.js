@@ -183,11 +183,13 @@ $(document).on('mousemove', function (e) {
 function showCollider() {
     $("#betweencol").css({"opacity": 1})
     $("#prevpos").css({"opacity": 1})
+    $("#poweruphitbox").css({"border": "5px solid greenyellow"});
 }
 
 function hideCollider() {
     $("#betweencol").css({"opacity": 0})
     $("#prevpos").css({"opacity": 0})
+    $("#poweruphitbox").css({"border": "5px solid transparent"});
 }
 
 
@@ -515,7 +517,7 @@ function movePowerups() {
             $(this).remove();
         }
 
-        if (is_colliding($(this), $("#betweencol")) || is_colliding($(this), $("#player"))) {
+        if (is_colliding($(this), $("#betweencol")) || is_colliding($(this), $("#poweruphitbox"))) {
             
 
             if ($(this).hasClass("speeditem")) {

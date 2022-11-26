@@ -529,9 +529,12 @@ function movePowerups() {
                     $("#speedval").html(30 - lagSpd + 1);
                 }
 
+                triggerEffectAnim('speedup')
+
             } else if ($(this).hasClass("lifeitem")) {
                 lives++;
                 $("#lifeval").html(lives);
+                triggerEffectAnim('heal');
             }
 
             $(this.remove());
@@ -639,10 +642,7 @@ function square(x) {
 }
 
 function hurtPlayer() {
-    $("#hurtoverlay").addClass('hurt')
-    .on("animationend", function(){
-    $(this).removeClass('hurt');
-  });
+  triggerEffectAnim('hurt')
 
   lives--;
   $("#lifeval").html(lives);
@@ -816,4 +816,11 @@ function spawnLifeUp(x, y) {
     $("#obstaclecontainer").append(`<div class="lifeitem power" style = "left: ${x}px; top: ${y}px">
     <div class="lifeVisPlus"> +</div>
 </div>`);
+}
+
+function triggerEffectAnim(classname) {
+    $("#effectoverlay").addClass(classname)
+    .on("animationend", function(){
+    $(this).removeClass(classname);
+  });
 }

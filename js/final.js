@@ -537,9 +537,9 @@ function movePowerups() {
             } else if ($(this).hasClass("removeall")) {
                 triggerEffectAnim("clearAll")
                 // "Skips" next obstacle
-                distObstacle += newObstacleSpawnTime();
-                distship += newObstacleSpawnTime();
-                distFirework += newObstacleSpawnTime();
+                distObstacle += newObstacleSpawnTime() + newObstacleSpawnTime() + (newObstacleSpawnTime() / 2);
+                distship += newObstacleSpawnTime() + newObstacleSpawnTime() + (newObstacleSpawnTime() / 2);
+                distFirework += newObstacleSpawnTime() + newObstacleSpawnTime() + (newObstacleSpawnTime() / 2);
                 clearLaserTimeouts();
                 $("#obstaclecontainer").empty();
             }

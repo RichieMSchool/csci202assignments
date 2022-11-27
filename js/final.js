@@ -858,8 +858,8 @@ function startGame() {
     // Speed changes
     var speedInterval = window.setInterval(function () {
         if (document.hasFocus()) {
-            if (speed >= 6.5) {
-                speed = 6.5;
+            if (speed >= 9) {
+                speed = 9;
                 clearInterval(speedInterval)
             }
             //Speeds up the player

@@ -1,43 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/final/main.css">
-    
+
     <script src="../js/jquery.js"></script>
     <script src="../js/colliding.js"></script>
     <script src="../js/final.js"></script>
 
     <title>Final</title>
 </head>
+
 <body>
     <div id="gamecontainer">
 
+        <div id="howtoplay" onclick="startGame()">
+            <h1>HOW TO PLAY</h1>
+
+            <div class="section">
+                <h2>Control your character using <span style="color:black; background-color: yellow;">your mouse cursor</span>!</h2>
+                <div id="player">
+                    <div id="poweruphitbox"></div>
+                    <div id="eye">
+                        <div id="iris"></div>
+                    </div>
+                    <div id="body"></div>
+                    <div id="armL"></div>
+                    <div id="armR"></div>
+                    <div id="legL"></div>
+                    <div id="legR"></div>
+                </div>
+            </div>
+
+
+            <div class="section" style="top: 300px">
+                <h2>Avoid obstacles!</h2>
+                <h3>Most obstacles have a <span style="color:red; text-shadow: 0px 0px 5px black">red</span> color!</h3>
+                    <div class="laser" style="left: 900px; height: 50px; top: 150px"></div>
+                    <div class="horizontalLaser" style="top: 160px; left: 990px; width: 50px;"></div>
+            </div>
+
+            <div class="section" style="top: 520px">
+                <h2>Collect Powerups!</h2>
+                <h3>Increase your <span style="color:limegreen">health</span> and <span style="color:orangered">flight control</span>!</h3>
+               
+                <div class="lifeitem" style="left: 800px; top: 150px">
+                    <div class="lifeVisPlus"> +</div>
+                </div>
+                
+                <div class="speeditem" style = "left: 1080px; top: 150px">
+                    <div class="speedVisA" style="top:13px">
+                        <div class="speedVisAL"></div>
+                        <div class="speedVisAR"></div>
+                    </div>
+
+                    <div class="speedVisA" style="top:29px">
+                        <div class="speedVisAL"></div>
+                        <div class="speedVisAR"></div>
+                    </div>
+                </div>`
+            </div>
+
+            <div class="section" style="top:760px">
+                <h2>Collect <span style="color: black; background-color: white; padding: 0 3px">???</span></h2>
+                <h3>What's this?</h3>
+
+                <div class="removeall" style="top: 130px; left:925px"></div>
+            </div>
+
+            <div style="top: 990px" class="section">
+                <h2 style="background-color: white; color: black">Click anywhere to start!</h2>
+            </div>
+
+        </div>
+
         <div id="prevpos"></div>
         <div id="betweencol"></div>
-        
+
         <div id="fpsbuttons">
             <button id="15fps" onclick="changeFPS('15fps')">15 FPS</button>
             <button id="30fps" onclick="changeFPS('30fps')">30 FPS</button>
             <button id="60fps" onclick="changeFPS('60fps')">60 FPS</button>
         </div>
-        
-        <div id="reswarning">Warning: The game is meant to be played on a 1080p screen. Your resolution is too low. please fullscreen your browser and/or zoom out.</div>
+
+        <div id="reswarning">Warning: The game is meant to be played on a 1080p screen. Your resolution is too low.
+            please fullscreen your browser and/or zoom out.</div>
         <div id="cloudcontainer"></div>
         <div id="treecontainer"></div>
         <div id="housecontainer"></div>
         <div id="obstaclecontainer"></div>
-    
-        <div id="bgoverlay"></div>    
+
+        <div id="bgoverlay"></div>
         <div id="distance">Distance: <b><span id="distval">1</span></b></div>
         <div id="speed">Flight Control: <b><span id="speedval">1</span></b></div>
         <div id="lives">Health: <b><span id="lifeval">3</span></b></div>
-    
+
         <div id="player">
             <div id="poweruphitbox"></div>
-            <div id="eye"><div id="iris"></div></div>
+            <div id="eye">
+                <div id="iris"></div>
+            </div>
             <div id="body"></div>
             <div id="armL"></div>
             <div id="armR"></div>
@@ -46,11 +111,12 @@
         </div>
 
         <div id="effectoverlay"></div>
-        <div id="endscreen"></div>  
+        <div id="endscreen"></div>
     </div>
 
     <div id="borderH"></div>
     <div id="borderW"></div>
-    
+
 </body>
+
 </html>

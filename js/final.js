@@ -13,7 +13,7 @@ playerY = 0;
 curX = 0;
 curY = 0;
 
-lagSpd = 29;
+lagSpd = 30;
 lives = 3;
 
 isDay = true;
@@ -27,8 +27,15 @@ curcloudshadow = cloudshadowday;
 
 laserTimeouts = new Set();
 
-
-createTimeIntervals();
+playerInterval = -1;
+cloudInterval = -1;
+houseInterval = -1;
+treeInterval = -1;
+shipInterval = -1;
+wallInterval = -1;
+fireworkInterval= -1;
+laserColInterval = -1;
+powerupInterval = -1;
 
 // Remember player's FPS preference
 
@@ -40,6 +47,7 @@ if (window.location.href.split("#")[1] !== undefined) {
     }
 }
 
+clearTimeIntervals()
 
 window.onblur = function () {
     $(".laserBase").css({"animation-play-state": "paused"});
@@ -49,23 +57,7 @@ window.onfocus = function () {
     $(".laserBase").css({"animation-play-state": "running"});
 }
 
-// Speed changes
-
-var speedInterval = window.setInterval(function () {
-    if (document.hasFocus()) {
-        if (speed >= 6.5) {
-            speed = 6.5;
-            clearInterval(speedInterval)
-        }
-        //Speeds up the player
-        speed += 0.01;
-    }
-}, 1000);
-
-
 //Spawning and Scoring Logic
-
-setTimeout(move, 800 / speed)
 
 dayShift = 100;
 
@@ -548,6 +540,7 @@ function movePowerups() {
                 distObstacle += newObstacleSpawnTime();
                 distship += newObstacleSpawnTime();
                 distFirework += newObstacleSpawnTime();
+                clearLaserTimeouts();
                 $("#obstaclecontainer").empty();
             }
 
@@ -719,17 +712,21 @@ function spawnWall() {
 
 function spawnLasers () {
     let amount = Math.floor(Math.random() * 6) + 3
-    let waitTime = (2000 / amount) / speed;
+    let largestTime = 0;
     let timeoutIDS = [];
 
-    let cur = 0;
     for (let i = 0; i < amount; i++) {
-        cur += Math.random() * waitTime;
+        cur = Math.random() * (2000 / speed);
+
+        if(cur >= largestTime) {
+            largestTime = cur;
+        }
+
         let curID = setTimeout(spawnLaser, cur);
         laserTimeouts.add(curID);
         timeoutIDS.push(curID);
     }
-    setTimeout(removeLaserTimeoutIDs, cur + 500, timeoutIDS); // workaround to remove non active laser timeouts
+    setTimeout(removeLaserTimeoutIDs, largestTime + 500, timeoutIDS); // workaround to remove non active laser timeouts
 }
 
 function removeLaserTimeoutIDs(timeoutIDS) {
@@ -853,4 +850,25 @@ function triggerEffectAnim(classname) {
     .on("animationend", function(){
     $(this).removeClass(classname);
   });
+}
+
+function startGame() {
+    $("#howtoplay").remove();
+
+    // Speed changes
+    var speedInterval = window.setInterval(function () {
+        if (document.hasFocus()) {
+            if (speed >= 6.5) {
+                speed = 6.5;
+                clearInterval(speedInterval)
+            }
+            //Speeds up the player
+            speed += 0.01;
+        }
+    }, 1000);
+
+    // Start Movement Loop
+    setTimeout(move, 800 / speed)
+
+    createTimeIntervals();
 }

@@ -317,9 +317,13 @@ body.night {
 
 /* FPS Buttons */
 
-#fpsbuttons {
+#fpsbuttons, #bgbuttons {
     position: absolute;
     z-index: 300;
+}
+
+#bgbuttons {
+    left: 200px;
 }
 
 button {
@@ -330,6 +334,11 @@ button {
     font-weight: bold;
     background-color: white;
     color: black;
+}
+
+button.selected {
+    background-color: #013501;
+    color: white;
 }
 
 button:hover {

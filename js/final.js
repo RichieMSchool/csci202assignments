@@ -20,6 +20,7 @@ isDay = true;
 
 intervalTime = 17;
 spdMult = 1;
+bgSpdMult = 1;
 
 const cloudshadowday = "#103243";
 const cloudshadownight = "#000000";
@@ -231,6 +232,43 @@ function changeFPS(option) {
     createTimeIntervals();
 }
 
+function changeBGFPS(multiplier) {
+    clearTimeIntervals();
+
+    //Current multiplier
+
+    switch(bgSpdMult) {
+        case 1:
+            $("#bgfull").removeClass("selected");
+            break;
+        case 2:
+            $("#bghalf").removeClass("selected");
+            break;
+
+        case 4:
+            $("#bgquarter").removeClass("selected");
+            break;
+    }
+
+    switch(multiplier) {
+        case "bgfull":
+            bgSpdMult = 1;
+            $("#bgfull").addClass("selected");
+            break;
+        case "bghalf":
+            bgSpdMult = 2;
+            $("#bghalf").addClass("selected");
+            break;
+        case "bgquarter":
+        default:
+            bgSpdMult = 4;
+            $("#bgquarter").addClass("selected");
+            break;
+    }
+
+    createTimeIntervals();
+}
+
 function createTimeIntervals() {
 
     if (intervalTime == 0) {
@@ -240,9 +278,9 @@ function createTimeIntervals() {
 
     playerInterval = window.setInterval(movePlayer, intervalTime);
     
-    cloudInterval = window.setInterval(moveClouds, intervalTime);
-    houseInterval = window.setInterval(moveHouses, intervalTime);
-    treeInterval = window.setInterval(moveTrees, intervalTime);
+    cloudInterval = window.setInterval(moveClouds, intervalTime * bgSpdMult);
+    houseInterval = window.setInterval(moveHouses, intervalTime * bgSpdMult);
+    treeInterval = window.setInterval(moveTrees, intervalTime * bgSpdMult);
 
     wallInterval = window.setInterval(moveWalls, intervalTime);
     shipInterval = window.setInterval(moveShips, intervalTime);
@@ -342,7 +380,7 @@ function moveClouds() {
         if (pos.left + $(this).width() <= 0) {
             $(this).remove();
         }
-        $(this).css({ "left": `${pos.left - ((swidth / (800 + (Math.random() * 800 / speed))) * speed * spdMult)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px ${curcloudshadow}` });
+        $(this).css({ "left": `${pos.left - ((swidth / (800 + (Math.random() * 800 / speed))) * speed * spdMult * bgSpdMult)}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 20px 20px ${curcloudshadow}` });
     });
 }
 
@@ -358,7 +396,7 @@ function moveHouses() {
             $(this).remove();
         }
 
-        $(this).css({ "left": `${pos.left - (swidth / (200)) * speed * spdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243` });
+        $(this).css({ "left": `${pos.left - (swidth / (200)) * speed * spdMult * bgSpdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 70px 20px #103243` });
 
         $(this).find(".housedoor").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 5px 10px #000000aa` })
         $(this).find(".housemain").css({ "box-shadow": `${((pos.left / swidth) - 0.5) * 30}px 0px 30px #000000` })
@@ -378,7 +416,7 @@ function moveTrees() {
             $(this).remove();
         }
 
-        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed * spdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
+        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed * spdMult * bgSpdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
     });
 
     $('.leaf').each(function () {
@@ -388,7 +426,7 @@ function moveTrees() {
             $(this).remove();
         }
 
-        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed * spdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
+        $(this).css({ "left": `${pos.left - (swidth / (400)) * speed * spdMult * bgSpdMult}px`, "box-shadow": `${((pos.left / swidth) - 0.5) * 70}px 10px 20px #000000aa` });
     });
 }
 

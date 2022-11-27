@@ -814,7 +814,7 @@ function newPowerSpawnTime() {
 }
 
 function spawnRandomPower() {
-    if (lagSpd == 5) {
+    if (lagSpd <= 5) {
         spawnLifeUp(swidth, (Math.random() * sheight/2) + (sheight / 4));
         return;
     }

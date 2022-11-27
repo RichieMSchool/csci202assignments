@@ -240,13 +240,6 @@ body.night {
     z-index: 190;
 }
 
-.hurt {
-    background-color: red;
-    animation-name: hurtAnim;
-    animation-timing-function: ease-in-out;
-    animation-duration: 1s;
-}
-
 .heal {
     background-color: #02fd02;
     animation-name: healAnim;
@@ -257,6 +250,13 @@ body.night {
 .speedup {
     background-color: orangered;
     animation-name: healAnim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+}
+
+.hurt {
+    background-color: red;
+    animation-name: hurtAnim;
     animation-timing-function: ease-in-out;
     animation-duration: 1s;
 }

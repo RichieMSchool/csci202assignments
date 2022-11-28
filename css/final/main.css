@@ -62,10 +62,11 @@ body.night {
     padding: 0 7px;
     font-size: 36px;
     font-weight: bold;
-    z-index: 300;
+    z-index: 800;
 
     pointer-events: none;
 
+    opacity: 0;
     background-color: #ffff64;
 }
 

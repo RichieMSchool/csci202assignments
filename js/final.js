@@ -22,6 +22,12 @@ intervalTime = 17;
 spdMult = 1;
 bgSpdMult = 1;
 
+hpercent = 0;
+wpercent = 0;
+curZoom = 1;
+
+cursorMult = 1;
+
 const cloudshadowday = "#103243";
 const cloudshadownight = "#000000";
 curcloudshadow = cloudshadowday;
@@ -165,6 +171,7 @@ function move() {
 $(document).ready(function () {
     setup();
     $(window).resize(function () {
+
         setup();
     });
 });
@@ -172,8 +179,8 @@ $(document).ready(function () {
 
 // Track Cursor
 $(document).on('mousemove', function (e) {
-    curX = clamp(e.pageX - 55, 0, swidth);
-    curY = clamp(e.pageY - 22, 0, sheight - 30);
+    curX = clamp((e.pageX * cursorMult) - 55, 0, swidth);
+    curY = clamp((e.pageY * cursorMult) - 22, 0, sheight - 30);
 });
 
 // FUNCTIONS
@@ -592,11 +599,28 @@ function movePowerups() {
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 function setup() {
+    
+    hpercent = window.innerWidth/swidth
+    wpercent = window.innerHeight/sheight
+    curZoom = 1;
 
-    if (window.innerHeight < sheight || window.innerWidth < swidth) {
-        $("#reswarning").css({ "opacity": 1 });
-    } else {
-        $("#reswarning").css({ "opacity": 0 });
+    if ('zoom' in document.body.style) {
+        if (wpercent < hpercent) {
+            document.body.style.zoom = `${wpercent* 100}%`
+            curZoom = wpercent;
+        }
+        else {
+            document.body.style.zoom = `${hpercent* 100}%`
+            curZoom = hpercent;
+        }
+        cursorMult = 1 / curZoom;
+    }
+    else {
+        if (window.innerHeight < sheight || window.innerWidth < swidth) {
+            $("#reswarning").css({ "opacity": 1 });
+        } else {
+            $("#reswarning").css({ "opacity": 0 });
+        }
     }
 
     if (!init) {

@@ -55,6 +55,16 @@ body.night {
     height: 1080px;
 }
 
+#credit {
+    position: absolute;
+    width: 1920px;
+    text-align: center;
+    top: 1057px;
+    z-index: 1000;
+    font-size: 20px;
+    opacity: 0.4;
+}
+
 #reswarning {
     position: absolute;
 
